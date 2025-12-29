@@ -25,7 +25,7 @@ const questions = [
     { text: "Bu bir radyo mu?", image: "uzaybasket/Resimlerim/radyo.png" },
     { text: "Bu bir robot mu?", image: "uzaybasket/Resimlerim/robot.png" },
     { text: "Bu bir saat mi?", image: "uzaybasket/Resimlerim/saat.png" },
-    { text: "Bu bir sarj kablosu mu?", image: "uzaybasket/Resimlerim/sarj.png" },
+    { text: "Bu bir sarj kablosu mu?", image: "Resimlerim/sarj.png" },
     { text: "Bu bir tablet mi?", image: "uzaybasket/Resimlerim/tablet.png" },
     { text: "Bu bir telefon mu?", image: "uzaybasket/Resimlerim/telefon.png" },
     { text: "Bu bir temizlik robotu mu?", image: "uzaybasket/Resimlerim/trobot.png" },
