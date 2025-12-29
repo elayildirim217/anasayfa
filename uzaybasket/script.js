@@ -9,7 +9,7 @@ let currentPlayer = "";
 
 // Placeholder questions - User will provide real images later
 const questions = [
-    { text: "Bu bir bilgisayar mı?", image: "resimlerim/bilgisayar.png" },
+    { text: "Bu bir bilgisayar mı?", image: "Resimlerim/bilgisayar.png" },
     { text: "Bu bir drone mu?", image: "resimlerim/drone.png" },
     { text: "Bu bir fare mi?", image: "resimlerim/fare.png" },
     { text: "Bu bir hoparlör mi?", image: "resimlerim/hoparlor.png" },
@@ -421,9 +421,9 @@ function showQuestion() {
         } while (randomNameIdx === randomImgIdx); // Aynı olmamasını garanti et
     }
 
-    // Resim yolunu belirle (resimlerim klasörü içindeyse yolu ekle)
+    // Resim yolunu belirle (Resimlerim klasörü içindeyse yolu ekle)
     const selectedImg = imageFiles[randomImgIdx];
-    questionImage.src = "resimlerim/" + selectedImg; // KLASÖR ADINA DİKKAT!
+    questionImage.src = "Resimlerim/" + selectedImg; // KLASÖR ADINA DİKKAT!
 
     // Soruyu yaz
     const selectedName = imageNames[randomNameIdx];
