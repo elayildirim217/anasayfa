@@ -3,16 +3,16 @@ const boys = ["Arel", "Eren", "Mahir", "Çınar", "Ege", "Arda", "Mustafa", "Yi�
 const girls = ["Ela", "Feraye", "Pelin", "Seray", "Defne", "Naz", "Derin", "Deniz", "Gülnihal", "İman"];
 
 const unit1Words = [
-    { word: "Bunk Beds", img: "images/Bunk+Beds.png" },
-    { word: "Shelf", img: "images/shelf.png" },
-    { word: "Fridge", img: "images/Fridge.png" },
-    { word: "Roof", img: "images/Roof.png" },
-    { word: "Balcony", img: "images/Balcony.png" },
-    { word: "Internet", img: "images/Internet.png" },
-    { word: "Laptop", img: "images/Laptop.png" },
-    { word: "Oven", img: "images/Oven.png" },
-    { word: "Shower", img: "images/Shower.png" },
-    { word: "Wash", img: "images/Wash.png" }
+    { word: "Bunk Beds", img: "worldwheel/images/Bunk+Beds.png" },
+    { word: "Shelf", img: "worldwheel/images/shelf.png" },
+    { word: "Fridge", img: "worldwheel/images/Fridge.png" },
+    { word: "Roof", img: "worldwheel/images/Roof.png" },
+    { word: "Balcony", img: "worldwheel/images/Balcony.png" },
+    { word: "Internet", img: "worldwheel/images/Internet.png" },
+    { word: "Laptop", img: "worldwheel/images/Laptop.png" },
+    { word: "Oven", img: "worldwheel/images/Oven.png" },
+    { word: "Shower", img: "worldwheel/images/Shower.png" },
+    { word: "Wash", img: "worldwheel/images/Wash.png" }
 ];
 
 let activeWords = unit1Words;
