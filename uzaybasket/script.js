@@ -423,7 +423,7 @@ function showQuestion() {
 
     // Resim yolunu belirle (Resimlerim klasörü içindeyse yolu ekle)
     const selectedImg = imageFiles[randomImgIdx];
-    questionImage.src = "Resimlerim/" + selectedImg; // KLASÖR ADINA DİKKAT!
+    questionImage.src = "uzaybasket/Resimlerim/" + selectedImg; // KLASÖR ADINA DİKKAT!
 
     // Soruyu yaz
     const selectedName = imageNames[randomNameIdx];
