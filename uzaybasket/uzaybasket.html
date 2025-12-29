@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uzay Basketbolu Bilgi Yarışması</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+
+    <div id="game-container">
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="screen active">
+            <h1 class="glow-text">Uzay Basketbolu</h1>
+            <p class="subtitle">Bilgi Yarışmasına Hoş Geldiniz!</p>
+            <button id="start-btn" class="neon-btn">Oyunu Başlat</button>
+        </div>
+
+        <!-- Player Selection Screen -->
+        <div id="selection-screen" class="screen">
+            <h2>Sıradaki Oyuncu Seçiliyor...</h2>
+            <div id="player-name-display" class="player-reveal">???</div>
+
+            <div class="toggle-container">
+                <label class="switch">
+                    <input type="checkbox" id="hoop-move-toggle" checked>
+                    <span class="slider round"></span>
+                </label>
+                <span class="toggle-label">Pota Hareket Etsin</span>
+            </div>
+
+            <button id="throw-basket-btn" class="neon-btn hidden">Basket At!</button>
+        </div>
+
+        <!-- Animation Screen (Basket Throw) -->
+        <!-- Animation Screen (Basket Throw) -->
+        <div id="animation-screen" class="screen">
+            <div class="hoop-container" id="hoop-container">
+                <img src="hoop.png" alt="Pota" id="hoop-img">
+                <div id="hoop-target"></div> <!-- Invisible target area for collision -->
+            </div>
+            <svg id="trajectory-svg"
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5;">
+                <path id="trajectory-line" d="" stroke="white" stroke-width="4" stroke-dasharray="10,10" fill="none"
+                    style="opacity: 0;"></path>
+            </svg>
+            <div class="basketball-container">
+                <div class="basketball" id="ball">🏀</div>
+            </div>
+            <div class="instruction-text">Topu tutup çek ve bırakarak basket at!</div>
+            <h2 id="shot-result">Basket!</h2>
+        </div>
+
+        <!-- Question Screen -->
+        <div id="question-screen" class="screen">
+            <div class="shuttle-container" id="shuttle-container">
+                <img src="vertical_rocket.png" alt="Uzay Mekiği" class="shuttle-img">
+                <div class="exhaust-flame"></div> <!-- Animated Flame -->
+                <div class="shuttle-content">
+                    <img src="scattered_cloud.png" alt="Bulut" class="cloud-bg">
+                    <div class="question-wrapper">
+                        <img id="question-image" src="" alt="Soru Resmi" class="question-img">
+                        <p id="question-text">Bu resimdeki nedir?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <div class="current-player-tag">Oyuncu: <span id="current-player-name"></span></div>
+                <div class="buttons">
+                    <button id="correct-btn" class="action-btn correct">Doğru ✅</button>
+                    <button id="wrong-btn" class="action-btn wrong">Yanlış ❌</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="game-over-screen" class="screen">
+            <h1 class="glow-text">Oyun Bitti!</h1>
+            <p>Tüm öğrenciler yarıştı.</p>
+            <button id="restart-btn" class="neon-btn">Yeniden Oyna</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

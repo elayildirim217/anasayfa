@@ -1,0 +1,497 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #000;
+    color: #fff;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Background Animation */
+.stars,
+.twinkling {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.stars {
+    background: #000 url('background.png') repeat top center;
+    z-index: -2;
+    background-size: cover;
+}
+
+.twinkling {
+    background: transparent;
+    z-index: -1;
+    animation: move-twink-back 200s linear infinite;
+}
+
+@keyframes move-twink-back {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: -10000px 5000px;
+    }
+}
+
+/* Typography */
+h1,
+h2,
+.glow-text {
+    font-family: 'Orbitron', sans-serif;
+    text-align: center;
+    text-shadow: 0 0 10px #00d2ff, 0 0 20px #00d2ff, 0 0 40px #00d2ff;
+}
+
+h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 40px;
+    color: #ccc;
+}
+
+/* Screens */
+.screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: opacity 0.5s ease;
+}
+
+.screen.active {
+    display: flex;
+}
+
+/* Buttons */
+.neon-btn {
+    padding: 15px 40px;
+    font-size: 1.5rem;
+    font-family: 'Orbitron', sans-serif;
+    color: #fff;
+    background: transparent;
+    border: 2px solid #00d2ff;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 10px #00d2ff inset, 0 0 20px #00d2ff;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.neon-btn:hover {
+    background: #00d2ff;
+    color: #000;
+    box-shadow: 0 0 40px #00d2ff inset, 0 0 40px #00d2ff;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Player Selection */
+.player-reveal {
+    font-size: 5rem;
+    font-weight: bold;
+    color: #ff00de;
+    text-shadow: 0 0 20px #ff00de;
+    margin: 40px 0;
+    animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+    from {
+        transform: scale(1);
+        text-shadow: 0 0 20px #ff00de;
+    }
+
+    to {
+        transform: scale(1.1);
+        text-shadow: 0 0 40px #ff00de, 0 0 60px #ff00de;
+    }
+}
+
+/* Toggle Switch */
+.toggle-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin-right: 10px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: #00d2ff;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #00d2ff;
+}
+
+input:checked+.slider:before {
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.toggle-label {
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+/* Animation Screen */
+.hoop-container {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    width: 200px;
+    height: 200px;
+    /* Difficulty: Moving Hoop */
+    animation: moveHoop 3s ease-in-out infinite alternate;
+}
+
+@keyframes moveHoop {
+    from {
+        top: 50px;
+    }
+
+    to {
+        top: 250px;
+    }
+}
+
+#hoop-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    mix-blend-mode: screen;
+    /* Removes black background */
+}
+
+/* ... existing styles ... */
+
+.shuttle-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* Hover Animation */
+    animation: shuttleHover 3s ease-in-out infinite alternate;
+    z-index: 2;
+    mix-blend-mode: screen;
+    /* Removes black background */
+}
+
+/* ... existing styles ... */
+
+.cloud-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0.9;
+    mix-blend-mode: screen;
+    /* Removes black background */
+}
+
+#hoop-target {
+    position: absolute;
+    top: 40%;
+    left: 25%;
+    width: 50%;
+    height: 40%;
+    /* border: 1px solid red; Debugging */
+}
+
+.basketball-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.basketball {
+    font-size: 4rem;
+    position: absolute;
+    bottom: 250px;
+    left: 50px;
+    cursor: grab;
+    pointer-events: auto;
+    user-select: none;
+    /* Prevent text selection */
+    touch-action: none;
+    /* Prevent scrolling on mobile while dragging */
+}
+
+.basketball:active {
+    cursor: grabbing;
+}
+
+.instruction-text {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #ccc;
+}
+
+#shot-result {
+    opacity: 0;
+    font-size: 6rem;
+    color: #00ff00;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.5s;
+    pointer-events: none;
+    z-index: 100;
+}
+
+/* Question Screen */
+.shuttle-container {
+    position: relative;
+    width: 600px;
+    /* Narrower for vertical rocket */
+    height: 800px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Initial State for Animation */
+    transform: translateY(100vh);
+    /* Fly in from bottom */
+    transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.shuttle-container.fly-in {
+    transform: translateY(0);
+}
+
+.shuttle-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* Hover Animation */
+    animation: shuttleHover 3s ease-in-out infinite alternate;
+    z-index: 2;
+}
+
+@keyframes shuttleHover {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-20px);
+    }
+}
+
+.exhaust-flame {
+    position: absolute;
+    bottom: 5%;
+    /* Position at bottom */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 150px;
+    background: linear-gradient(to bottom, #ff9900, #ff0000, transparent);
+    border-radius: 0 0 50% 50%;
+    filter: blur(10px);
+    transform-origin: top center;
+    animation: flameFlicker 0.1s infinite alternate;
+    z-index: 1;
+    opacity: 0.8;
+}
+
+@keyframes flameFlicker {
+    0% {
+        transform: translateX(-50%) scale(1);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translateX(-50%) scale(1.1);
+        opacity: 1;
+    }
+}
+
+.shuttle-content {
+    position: absolute;
+    top: 35%;
+    /* Position over the window area (approx) */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 250px;
+    height: 200px;
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cloud-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0.9;
+}
+
+.question-wrapper {
+    position: relative;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: #000;
+    padding: 20px;
+}
+
+.question-img {
+    max-width: 120px;
+    max-height: 120px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #333;
+}
+
+#question-text {
+    font-size: 1.2rem;
+    font-weight: bold;
+    line-height: 1.2;
+}
+
+.question-img {
+    max-width: 100px;
+    max-height: 100px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #333;
+}
+
+#question-text {
+    font-size: 1rem;
+    font-weight: bold;
+    line-height: 1.2;
+}
+
+.controls {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 100;
+    width: 100%;
+}
+
+.current-player-tag {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #ff00de;
+}
+
+.action-btn {
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    margin: 0 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.2s;
+}
+
+.action-btn:hover {
+    transform: scale(1.1);
+}
+
+.correct {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.wrong {
+    background-color: #f44336;
+    color: white;
+}

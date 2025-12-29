@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oyunlarım - Eğlence Dünyası</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Specific styles for the games list if needed, reusing existing styles mostly */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 10px 20px;
+            background-color: #ff6b6b;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #ff5252;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-decorations">
+        <div class="cloud cloud-1">☁️</div>
+        <div class="cloud cloud-2">☁️</div>
+        <div class="cloud cloud-3">☁️</div>
+        <div class="cloud cloud-4">☁️</div>
+        <div class="heart heart-1">💖</div>
+        <div class="heart heart-2">💖</div>
+        <div class="heart heart-3">💖</div>
+        <div class="heart heart-4">💖</div>
+        <div class="heart heart-5">💖</div>
+    </div>
+
+    <header>
+        <h1>🎮 Oyunlarım 🎮</h1>
+        <p>Hangi oyunu oynamak istersin?</p>
+    </header>
+
+    <main class="container">
+        <div class="games-grid">
+            <a href="sayioyunu/sayitahmin.html" class="game-card numeric-card"
+                onclick="console.log('Opening Number Game');">
+                <div class="game-icon-container">
+                    <div class="radar-ping"></div>
+                    <div class="inner-icon orange-text">0-100</div>
+                </div>
+                <div class="game-info">
+                    <h2>Sayı Tahmini</h2>
+                    <div class="badge orange-badge">Zihin Okuyucu</div>
+                    <p>Aklımdaki sayıyı bulabilir misin?</p>
+                </div>
+            </a>
+
+            <a href="wordwheel/ingilizcekelime.html" class="game-card special-card"
+                onclick="console.log('Opening Word Game');">
+                <div class="game-icon-container">
+                    <div class="spinning-wheel">⚙️</div>
+                    <div class="inner-icon  pink-text">A-Z</div>
+                </div>
+                <div class="game-info">
+                    <h2>Word Wheel</h2>
+                    <div class="badge">New Mission</div>
+                    <p>Learn Words and Have Fun</p>
+                </div>
+            </a>
+
+            <a href="uzaybasket/uzaybasket.html" class="game-card basket-card"
+                onclick="console.log('Opening Space Basket Game');">
+                <div class="game-icon-container">
+                    <div class="blue-glow-ring"></div>
+                    <div class="inner-icon blue-text">🏀</div>
+                </div>
+                <div class="game-info">
+                    <h2>Uzay Basketi</h2>
+                    <div class="badge blue-badge">Yıldız Oyuncu</div>
+                    <p>Uzayda basket atabilir misin?</p>
+                </div>
+            </a>
+
+            <a href="index.html" class="back-button">⬅️ Ana Sayfaya Dön</a>
+    </main>
+
+    <footer>
+        <p>İyi eğlenceler! 🎈</p>
+    </footer>
+</body>
+
+</html>

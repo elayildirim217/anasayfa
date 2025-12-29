@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sınıf Sayı Tahmin Oyunu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="cloud cloud-1"></div>
+    <div class="cloud cloud-2"></div>
+    <div class="cloud cloud-3"></div>
+
+    <!-- Floating Hearts -->
+    <div class="heart heart-1"></div>
+    <div class="heart heart-2"></div>
+    <div class="heart heart-3"></div>
+    <div class="heart heart-4"></div>
+    <div class="heart heart-5"></div>
+
+    <div id="name-entry-screen" class="screen active">
+        <h1>Ela'nın Sayı Tahmin Oyunu Başlıyoooorrr</h1>
+        <p>Oynamak isteyenler parmak kaldırsın</p>
+        <div class="input-group">
+            <input type="text" id="name-input" placeholder="İsim yazın..." autocomplete="off">
+            <button id="add-btn" class="btn secondary">Ekle</button>
+        </div>
+        <button id="load-class-names-btn" class="btn secondary" style="margin-top: 10px;">Heey 3/B Sınıfı Buradasınız
+        </button>
+        <ul id="name-list"></ul>
+        <button id="start-setup-btn" class="btn primary" disabled>Oyuna Hazırla</button>
+    </div>
+
+    <!-- Screen 2: Rules -->
+    <div id="rules-screen" class="screen hidden">
+        <h1>Oyun Kuralları</h1>
+        <div class="rules-content">
+            <p>1. Bir sayı tuttum.</p>
+            <p>2. Siz bu sayıyı tahmin etmeye çalışacaksınız.</p>
+            <p>3. "Daha Yukarı" veya "Daha Aşağı" ipuçlarını takip edin.</p>
+            <p>4. Sırayla tahminler yazılır veee sayıyı bulan kazanır!</p>
+        </div>
+        <button id="start-game-btn" class="btn primary">Anlaşıldı, Başlayalım!</button>
+    </div>
+
+    <!-- Screen 3: Selection -->
+    <div id="selection-screen" class="screen hidden">
+        <h2>Sıradaki Oyuncu</h2>
+        <div class="selected-name-container">
+            <span id="selected-name">???</span>
+        </div>
+        <div class="action-buttons">
+            <button id="skip-btn" class="btn secondary">Gelmedi / Atla</button>
+            <button id="confirm-player-btn" class="btn primary">Tahtaya Gel</button>
+        </div>
+    </div>
+
+    <!-- Screen 4: Game -->
+    <div id="game-screen" class="screen hidden">
+        <h2><span id="current-player-display"></span> Tahmin Ediyor</h2>
+        <p>1 ile 100 arasında bir sayı tuttum.</p>
+
+        <div class="game-area">
+            <input type="number" id="guess-input" placeholder="Tahmin..." min="1" max="100">
+            <button id="guess-btn" class="btn primary">Tahmin Et</button>
+        </div>
+
+        <div id="feedback-area" class="feedback"></div>
+
+        <button id="next-round-btn" class="btn secondary hidden">Sıradaki Kişi</button>
+    </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

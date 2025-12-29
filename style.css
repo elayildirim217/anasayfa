@@ -1,0 +1,574 @@
+:root {
+    --primary-color: #FF6B6B;
+    --secondary-color: #4ECDC4;
+    --accent-color: #FFE66D;
+    --text-color: #2C3E50;
+    --bg-color: #F7F9FC;
+    --card-bg: #FFFFFF;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Fredoka', sans-serif;
+    background: linear-gradient(135deg, #FFC0CB 0%, #89CFF0 100%);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: center;
+    overflow-x: hidden;
+    /* Prevent scrollbar from moving clouds */
+}
+
+.background-decorations {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.cloud {
+    position: absolute;
+    color: white;
+    opacity: 0.8;
+    animation: floatCloud 20s linear infinite;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.cloud-1 {
+    top: 10%;
+    left: -10%;
+    font-size: 4rem;
+    animation-duration: 25s;
+}
+
+.cloud-2 {
+    top: 30%;
+    left: -20%;
+    font-size: 6rem;
+    animation-duration: 35s;
+    animation-delay: 5s;
+}
+
+.cloud-3 {
+    top: 60%;
+    left: -15%;
+    font-size: 3rem;
+    animation-duration: 28s;
+    animation-delay: 2s;
+}
+
+.cloud-4 {
+    top: 80%;
+    left: -25%;
+    font-size: 5rem;
+    animation-duration: 40s;
+    animation-delay: 8s;
+}
+
+.heart {
+    position: absolute;
+    font-size: 1.5rem;
+    animation: floatHeart 15s ease-in-out infinite;
+    opacity: 0.6;
+}
+
+.heart-1 {
+    top: 20%;
+    left: 20%;
+    animation-delay: 0s;
+}
+
+.heart-2 {
+    top: 70%;
+    left: 80%;
+    animation-delay: 2s;
+}
+
+.heart-3 {
+    top: 40%;
+    left: 60%;
+    animation-delay: 4s;
+    font-size: 2rem;
+}
+
+.heart-4 {
+    top: 85%;
+    left: 30%;
+    animation-delay: 6s;
+}
+
+.heart-5 {
+    top: 15%;
+    left: 90%;
+    animation-delay: 3s;
+    font-size: 1rem;
+}
+
+@keyframes floatCloud {
+    0% {
+        transform: translateX(-100px);
+    }
+
+    100% {
+        transform: translateX(110vw);
+    }
+}
+
+@keyframes floatHeart {
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+
+    50% {
+        transform: translateY(-20px) scale(1.2);
+    }
+}
+
+header {
+    text-align: center;
+    padding: 40px 20px;
+    animation: bounceIn 1s ease;
+}
+
+header h1 {
+    font-size: 3.5rem;
+    color: var(--primary-color);
+    text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+}
+
+header p {
+    font-size: 1.5rem;
+    color: #555;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.category-card {
+    background: var(--card-bg);
+    border-radius: 25px;
+    padding: 30px;
+    width: 300px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border: 5px solid transparent;
+}
+
+.category-card:hover {
+    transform: translateY(-15px) scale(1.05);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.category-card .icon {
+    font-size: 5rem;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+.category-card:hover .icon {
+    transform: rotate(10deg) scale(1.1);
+}
+
+.category-card h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.category-card p {
+    font-size: 1.1rem;
+    color: #777;
+}
+
+/* Specific Colors for Categories */
+.category-card.music {
+    border-color: #FF9F43;
+}
+
+.category-card.music h2 {
+    color: #FF9F43;
+}
+
+.category-card.music:hover {
+    background-color: #FFF5EB;
+}
+
+.category-card.video {
+    border-color: #54A0FF;
+}
+
+.category-card.video h2 {
+    color: #54A0FF;
+}
+
+.category-card.video:hover {
+    background-color: #EBF5FF;
+}
+
+.category-card.game {
+    border-color: #1DD1A1;
+}
+
+.category-card.game h2 {
+    color: #1DD1A1;
+}
+
+.category-card.game:hover {
+    background-color: #E8FBF5;
+}
+
+footer {
+    margin-top: auto;
+    padding: 20px;
+    font-size: 1.2rem;
+    color: #888;
+}
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+
+    70% {
+        transform: scale(0.9);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2.5rem;
+    }
+
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* Kelime Çarkı Özel Kart Stili */
+.special-card {
+    background: rgba(20, 20, 40, 0.8);
+    border: 2px solid #ff00de;
+    /* Pembe/Mor neon */
+    box-shadow: 0 0 15px rgba(255, 0, 222, 0.3);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+.special-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 0 30px rgba(255, 0, 222, 0.6);
+    border-color: #fff;
+}
+
+/* Çark Dönme Animasyonu */
+.spinning-wheel {
+    font-size: 3rem;
+    position: absolute;
+    opacity: 0.2;
+    animation: rotateWheel 10s linear infinite;
+}
+
+@keyframes rotateWheel {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.game-icon-container {
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.inner-icon {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 10px #ff00de;
+    z-index: 2;
+}
+
+.badge {
+    display: inline-block;
+    background: #ff00de;
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+/* Sayı Tahmini Özel Kart Stili */
+.numeric-card {
+    background: rgba(40, 30, 20, 0.8);
+    /* Koyu kehribar/siyah tonu */
+    border: 2px solid #ff9900;
+    /* Turuncu neon */
+    box-shadow: 0 0 15px rgba(255, 153, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+.numeric-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 0 30px rgba(255, 153, 0, 0.6);
+    border-color: #fff;
+}
+
+/* Radar Efekti - Logoyu daha canlı yapar */
+.radar-ping {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border: 3px solid #ff9900;
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ping {
+
+    75%,
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+/* Turuncu Rozet */
+.orange-badge {
+    display: inline-block;
+    background: #ff9900;
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* Genel Sınıf Uyumluluğu */
+.game-icon-container {
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.inner-icon {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    z-index: 2;
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* Sayı Oyunu Kartı Özel Stili */
+.numeric-card {
+    background: rgba(45, 25, 0, 0.6);
+    /* Koyu kehribar arka plan */
+    border: 2px solid #ff8800;
+    /* Turuncu neon çerçeve */
+    box-shadow: 0 0 15px rgba(255, 136, 0, 0.3);
+}
+
+.numeric-card:hover {
+    box-shadow: 0 0 30px rgba(255, 136, 0, 0.6);
+    border-color: #ffcc00;
+    /* Üzerine gelince sarıya çalan turuncu */
+}
+
+/* 0-100 Metni İçin Turuncu Parlama */
+.orange-text {
+    color: #ffaa00;
+    text-shadow: 0 0 10px rgba(255, 170, 0, 0.8);
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* Radar Efekti (Halka Animasyonu) */
+.radar-ping {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border: 2px solid #ff8800;
+    border-radius: 50%;
+    animation: orange-ping 2s infinite;
+}
+
+@keyframes orange-ping {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
+
+/* Turuncu Rozet */
+.orange-badge {
+    background: #ff8800;
+    color: #000;
+    /* Siyah yazı turuncu üstünde daha iyi okunur */
+    font-weight: bold;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+}
+
+/* Uzay Basketi Kartı Özel Stili */
+.basket-card {
+    background: rgba(0, 20, 50, 0.7);
+    /* Derin Koyu Mavi arka plan */
+    border: 2px solid #00d2ff;
+    /* Mavi neon çerçeve */
+    box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+}
+
+.basket-card:hover {
+    box-shadow: 0 0 35px rgba(0, 210, 255, 0.6);
+    border-color: #ffffff;
+    /* Üzerine gelince beyaz parlama */
+}
+
+/* Mavi Parlayan Metin ve İkon */
+.blue-text {
+    filter: drop-shadow(0 0 10px #00d2ff);
+    font-size: 3rem;
+    z-index: 2;
+}
+
+/* Atmosfer/Yörünge Efekti */
+.blue-glow-ring {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    border: 2px dashed #00d2ff;
+    border-radius: 50%;
+    animation: rotate-orbit 8s linear infinite;
+    opacity: 0.6;
+}
+
+@keyframes rotate-orbit {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Mavi Rozet */
+.blue-badge {
+    background: #00d2ff;
+    color: #000;
+    font-weight: bold;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    box-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
+}
+
+/* Word Wheel Pembe Kart Stili */
+.pink-card {
+    background: rgba(40, 0, 40, 0.7);
+    /* Koyu mor/pembe arka plan */
+    border: 2px solid #ff00de;
+    /* Parlak pembe neon çerçeve */
+    box-shadow: 0 0 15px rgba(255, 0, 222, 0.3);
+}
+
+.pink-card:hover {
+    box-shadow: 0 0 35px rgba(255, 0, 222, 0.6);
+    border-color: #ffffff;
+    /* Üzerine gelince beyaz parlama */
+}
+
+/* Pembe Parlayan Metin */
+.pink-text {
+    color: #ff00de;
+    text-shadow: 0 0 15px rgba(255, 0, 222, 0.8);
+    font-family: 'Orbitron', sans-serif;
+    z-index: 2;
+}
+
+/* Dönen Çark Animasyonu */
+.spinning-wheel-pink {
+    position: absolute;
+    font-size: 3.5rem;
+    opacity: 0.3;
+    color: #ff00de;
+    animation: rotate-slow 10s linear infinite;
+}
+
+@keyframes rotate-slow {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Pembe Rozet */
+.pink-badge {
+    background: #ff00de;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    box-shadow: 0 0 10px rgba(255, 0, 222, 0.5);
+}
