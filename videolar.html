@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ela'nın Video Kütüphanesi</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="videolar.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-decorations">
+        <div class="cloud cloud-1">☁️</div>
+        <div class="cloud cloud-2">☁️</div>
+        <div class="cloud cloud-3">☁️</div>
+    </div>
+
+    <header>
+        <h1>📚 Video Kütüphanesi 🎬</h1>
+        <p>İstediğin rafı seç ve izlemeye başla!</p>
+        <a href="index.html" class="back-button">🏠 Ana Sayfaya Dön</a>
+    </header>
+
+    <main class="library-container">
+        <div class="bookshelf">
+            <!-- Shelf 1: English Videos -->
+            <div class="shelf" onclick="toggleShelf('english')">
+                <div class="shelf-label">🇬🇧 İngilizce Videolarım</div>
+                <div class="books">
+                    <div class="book red"></div>
+                    <div class="book blue"></div>
+                    <div class="book green"></div>
+                </div>
+            </div>
+            <div id="videos-english" class="shelf-videos"></div>
+
+            <!-- Shelf 2: Sports Videos -->
+            <div class="shelf" onclick="toggleShelf('sports')">
+                <div class="shelf-label">
+                    <img src="short_track.png" class="shelf-icon-img" alt="Short Track">
+                    Spor Videolarım
+                </div>
+                <div class="books">
+                    <div class="book purple"></div>
+                    <div class="book yellow"></div>
+                </div>
+            </div>
+            <div id="videos-sports" class="shelf-videos"></div>
+
+            <!-- Shelf 3: Favorite Series -->
+            <div class="shelf" onclick="toggleShelf('series')">
+                <div class="shelf-label">📺 Sevdiğimiz Diziler</div>
+                <div class="books">
+                    <div class="book orange"></div>
+                    <div class="book blue"></div>
+                    <div class="book red"></div>
+                </div>
+            </div>
+            <div id="videos-series" class="shelf-videos"></div>
+
+            <!-- Shelf 4: Favorite Movies -->
+            <div class="shelf" onclick="toggleShelf('movies')">
+                <div class="shelf-label">🍿 Sevdiğimiz Filmler</div>
+                <div class="books">
+                    <div class="book green"></div>
+                    <div class="book purple"></div>
+                </div>
+            </div>
+            <div id="videos-movies" class="shelf-videos"></div>
+
+            <!-- Shelf 5: Turkish Videos -->
+            <div class="shelf" onclick="toggleShelf('turkish')">
+                <div class="shelf-label">🇹🇷 Türkçe Videolarım</div>
+                <div class="books">
+                    <div class="book yellow"></div>
+                    <div class="book orange"></div>
+                    <div class="book blue"></div>
+                </div>
+            </div>
+            <div id="videos-turkish" class="shelf-videos"></div>
+        </div>
+    </main>
+
+    <script src="videolar.js"></script>
+</body>
+
+</html>

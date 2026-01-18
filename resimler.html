@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resimler - Ela'nın Eğlence Dünyası</title>
+    <link rel="stylesheet" href="resimler.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <h1>🖼️ Resim Kataloğu</h1>
+        <p>En güzel anılar burada!</p>
+        <a href="index.html"
+            style="font-size: 1.2em; text-decoration: none; color: #ad1457; display: inline-block; margin-top: 10px;">🏠
+            Ana Sayfaya Dön</a>
+    </header>
+
+    <main class="container">
+        <!-- Normal Pictures Section -->
+        <section class="gallery-section">
+            <h2>Çizdiğim Resimler</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="resimlerim/1768639144805.jpg" alt="Resim 1"></div>
+                <div class="gallery-item"><img src="resimlerim/1768639183894.jpg" alt="Resim 2"></div>
+                <div class="gallery-item"><img src="resimlerim/1768639218324.jpg" alt="Resim 3"></div>
+                <div class="gallery-item"><img src="resimlerim/1768639255098.jpg" alt="Resim 4"></div>
+                <div class="gallery-item"><img src="resimlerim/1768639283837.jpg" alt="Resim 5"></div>
+                <div class="gallery-item"><img src="resimlerim/1768639307585.jpg" alt="Resim 6"></div>
+                <div class="gallery-item"><img src="resimlerim/1768639335272.jpg" alt="Özel Resim 1"></div>
+                <div class="gallery-item"><img src="resimlerim/1768639364405.jpg" alt="Özel Resim 2"></div>
+                <div class="gallery-item"><img src="resimlerim/1768639399711.jpg" alt="Özel Resim 3"></div>
+                <div class="gallery-item"><img src="resimlerim/1768639427953-1.jpg" alt="Özel Resim 4"></div>
+                <div class="gallery-item"><img src="resimlerim/1768639454282-1.jpg" alt="Özel Resim 5"></div>
+                <div class="gallery-item"><img src="resimlerim/1768639482428-1.jpg" alt="Özel Resim 6"></div>
+            </div>
+        </section>
+
+        <!-- Special Pictures Section -->
+        <section class="gallery-section special-section">
+            <h2>💖 Özel Resimlerim</h2>
+
+            <!-- Lock Overlay -->
+            <div class="locked-overlay">
+                <button id="lockBtn" class="lock-btn">🔒</button>
+                <div id="lockMessage" class="lock-message">Kilidi Açmak İçin Tıkla</div>
+            </div>
+
+            <!-- Hidden Content (Revealed after password) -->
+            <div class="hidden-content-wrapper hidden-content">
+                <button id="reLockBtn" class="relock-btn">Tekrar Kilitle 🔒</button>
+                <div class="gallery-grid">
+                    <div class="gallery-item"><img src="resimlerim/caco halam.png" alt="Özel Resim 1"></div>
+                    <div class="gallery-item"><img src="resimlerim/canım ablam.png" alt="Özel Resim 2"></div>
+                    <div class="gallery-item"><img src="resimlerim/ela.png" alt="Özel Resim 3"></div>
+                    <div class="gallery-item"><img src="resimlerim/gökhan amca.png" alt="Özel Resim 4"></div>
+                    <div class="gallery-item"><img src="resimlerim/kübra halacım.png" alt="Özel Resim 5"></div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Password Modal -->
+    <div id="passwordModal" class="modal-overlay">
+        <div class="close-modal">&times;</div>
+        <div class="calculator">
+            <div id="calcDisplay" class="calc-display"></div>
+            <div class="calc-grid">
+                <button class="calc-btn" data-value="1">1</button>
+                <button class="calc-btn" data-value="2">2</button>
+                <button class="calc-btn" data-value="3">3</button>
+                <button class="calc-btn" data-value="4">4</button>
+                <button class="calc-btn" data-value="5">5</button>
+                <button class="calc-btn" data-value="6">6</button>
+                <button class="calc-btn" data-value="7">7</button>
+                <button class="calc-btn" data-value="8">8</button>
+                <button class="calc-btn" data-value="9">9</button>
+                <button class="calc-btn delete" data-action="delete">⌫</button>
+                <button class="calc-btn" data-value="0">0</button>
+                <button class="calc-btn submit" data-action="submit">GİRİŞ</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Senin için hazırlandı! 🎈</p>
+    </footer>
+
+    <script src="resimler.js"></script>
+</body>
+
+</html>
