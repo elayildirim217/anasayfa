@@ -155,4 +155,33 @@ document.addEventListener('DOMContentLoaded', () => {
             checkLockoutStatus();
         }
     }, 1000);
+    // Lightbox Functionality
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxClose = document.getElementById('lightboxClose');
+
+    // Add click event to all gallery images
+    document.querySelectorAll('.gallery-item img').forEach(img => {
+        img.addEventListener('click', () => {
+            // Only open if not locked or if it's a public image
+            // Actually, the hidden content is hidden via display:none, so we can't click separate locked images unless unlocked.
+            // So simple click listener is fine.
+            lightbox.style.display = 'flex';
+            lightboxImg.src = img.src;
+        });
+    });
+
+    // Close lightbox
+    lightboxClose.addEventListener('click', () => {
+        lightbox.style.display = 'none';
+        lightboxImg.src = '';
+    });
+
+    // Close on background click
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+            lightbox.style.display = 'none';
+            lightboxImg.src = '';
+        }
+    });
 });
