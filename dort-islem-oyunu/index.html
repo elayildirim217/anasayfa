@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matematik 4 İşlem Oyunu</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="background-overlay"></div>
+
+    <div class="container">
+        <!-- Giriş Ekranı: Sınıf Seçimi -->
+        <div id="start-screen" class="screen active">
+            <h1>Matematik Dünyasına Hoş Geldin!</h1>
+            <p>Sınıfını Seç ve Maceraya Başla</p>
+            <div class="grade-grid">
+                <button class="grade-btn" data-grade="1">1. Sınıf</button>
+                <button class="grade-btn" data-grade="2">2. Sınıf</button>
+                <button class="grade-btn" data-grade="3">3. Sınıf</button>
+                <button class="grade-btn" data-grade="4">4. Sınıf</button>
+                <button class="grade-btn" data-grade="5">5. Sınıf</button>
+                <button class="grade-btn" data-grade="6">6. Sınıf</button>
+                <button class="grade-btn" data-grade="7">7. Sınıf</button>
+                <button class="grade-btn" data-grade="8">8. Sınıf</button>
+            </div>
+            <div class="extra-buttons">
+                <button id="eval-mode-btn" class="secondary-btn" style="background: #ff9f43;">📅 Haftalık
+                    Değerlendirme</button>
+                <button id="multiplication-btn" class="secondary-btn" style="background: #e17055;">✖️ Çarpım Tablosu
+                    Egzersizi</button>
+                <button id="mixed-multiplication-btn" class="secondary-btn" style="background: #6c5ce7;">🎲 Karışık
+                    Çarpım Soruları</button>
+            </div>
+        </div>
+
+        <!-- Çarpım Tablosu Ekranı -->
+        <div id="multiplication-screen" class="screen hidden">
+            <h1>Çarpım Tablosu Egzersizi</h1>
+            <p>Eksik sayıları tamamla!</p>
+            <div id="multiplication-grid" class="multiplication-grid">
+                <!-- Javascript ile doldurulacak -->
+            </div>
+            <div class="controls">
+                <button id="check-multiplication-btn" class="action-btn success">✅ Kontrol Et</button>
+                <button id="back-from-multiplication" class="secondary-btn">Geri Dön</button>
+            </div>
+        </div>
+
+        <!-- Zorluk Seviyesi Ekranı -->
+        <div id="difficulty-screen" class="screen hidden">
+            <h1>Zorluk Seviyesi Seç</h1>
+            <div class="difficulty-options">
+                <button class="diff-btn" data-diff="easy">Kolay</button>
+                <button class="diff-btn" data-diff="medium">Orta</button>
+                <button class="diff-btn" data-diff="hard">Zor</button>
+            </div>
+            <button id="back-to-grade" class="secondary-btn">Geri Dön</button>
+        </div>
+
+        <!-- Oyun Ekranı -->
+        <div id="game-screen" class="screen hidden">
+            <header>
+                <button id="back-to-menu-btn" class="secondary-btn" style="font-size: 0.9rem; padding: 5px 15px;">🏠 Ana
+                    Menü</button>
+                <div class="score-board">Puan: <span id="score">0</span></div>
+                <div class="level-indicator">Seviye: <span id="level-display">Kolay</span></div>
+            </header>
+
+            <div class="game-area">
+                <div class="question-card">
+                    <h2 id="question-text">Soru Yükleniyor...</h2>
+                    <div class="options-grid">
+                        <button class="option-btn" id="opt-a">A</button>
+                        <button class="option-btn" id="opt-b">B</button>
+                        <button class="option-btn" id="opt-c">C</button>
+                        <button class="option-btn" id="opt-d">D</button>
+                    </div>
+                </div>
+
+                <div class="drawing-tools">
+                    <button id="toggle-canvas-btn" class="tool-btn">✏️ Çizim Tahtası</button>
+                </div>
+            </div>
+
+            <div class="student-section">
+                <div class="student-display">
+                    <span id="current-student">Öğrenci Seçiliyor...</span>
+                </div>
+                <div class="student-controls">
+                    <button id="random-student-btn" class="action-btn">🎲 Tahtaya Kalk</button>
+                    <button id="present-btn" class="action-btn success">✅ Geldi</button>
+                    <button id="absent-btn" class="action-btn danger">❌ Gelmedi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Canvas ve Araçları (Modal gibi çalışacak) -->
+    <div id="canvas-container" class="hidden">
+        <canvas id="drawing-board"></canvas>
+        <div class="palette">
+            <div class="colors">
+                <div class="color-swatch" style="background-color: #000000;" data-color="#000000"></div>
+                <div class="color-swatch" style="background-color: #ff0000;" data-color="#ff0000"></div>
+                <div class="color-swatch" style="background-color: #00ff00;" data-color="#00ff00"></div>
+                <div class="color-swatch" style="background-color: #0000ff;" data-color="#0000ff"></div>
+                <div class="color-swatch" style="background-color: #ffff00;" data-color="#ffff00"></div>
+                <div class="color-swatch" style="background-color: #ff00ff;" data-color="#ff00ff"></div>
+                <div class="color-swatch" style="background-color: #00ffff;" data-color="#00ffff"></div>
+                <div class="color-swatch" style="background-color: #ffffff;" data-color="#ffffff"></div>
+            </div>
+            <div class="tools">
+                <button id="eraser-btn" class="tool-btn">🧽 Silgi</button>
+                <button id="clear-canvas" class="tool-btn">🗑️ Temizle</button>
+                <button id="close-canvas" class="tool-btn">Kapat</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
