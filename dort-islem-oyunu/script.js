@@ -166,6 +166,41 @@ document.addEventListener('DOMContentLoaded', () => {
         [lastX, lastY] = [e.offsetX, e.offsetY];
     }
 
+    // --- Touch Events ---
+    canvas.addEventListener('touchstart', (e) => {
+        isDrawing = true;
+        const pos = getTouchPos(canvas, e);
+        [lastX, lastY] = [pos.x, pos.y];
+        e.preventDefault(); // Prevent scrolling
+    });
+
+    canvas.addEventListener('touchmove', (e) => {
+        if (!isDrawing) return;
+        const pos = getTouchPos(canvas, e);
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(pos.x, pos.y);
+        ctx.strokeStyle = currentColor;
+        ctx.lineWidth = 5;
+        ctx.lineCap = 'round';
+        ctx.stroke();
+        [lastX, lastY] = [pos.x, pos.y];
+        e.preventDefault(); // Prevent scrolling
+    });
+
+    canvas.addEventListener('touchend', (e) => {
+        isDrawing = false;
+        e.preventDefault();
+    });
+
+    function getTouchPos(canvasDom, touchEvent) {
+        const rect = canvasDom.getBoundingClientRect();
+        return {
+            x: touchEvent.touches[0].clientX - rect.left,
+            y: touchEvent.touches[0].clientY - rect.top
+        };
+    }
+
     function resizeCanvas() {
         canvas.width = window.innerWidth * 0.9;
         canvas.height = window.innerHeight * 0.8;
