@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Family Card Game</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Setup Screen -->
+        <div id="setup-screen">
+            <h1>English Family Card Game</h1>
+
+            <div class="step-1">
+                <h2>Kaç kişi oynayacak?</h2>
+                <input type="number" id="player-count" min="1" max="24" placeholder="Oyuncu Sayısı">
+                <button onclick="confirmPlayerCount()">Devam Et</button>
+            </div>
+
+            <!-- New Step: Card Count -->
+            <div class="step-1-5 hidden">
+                <h2>Kaç kart olacak?</h2>
+                <input type="number" id="card-count" min="4" max="100" placeholder="Kart Sayısı">
+                <button onclick="confirmCardCount()">Devam Et</button>
+            </div>
+
+            <div class="step-2 hidden">
+                <h2>Kaç grup olacak?</h2>
+                <input type="number" id="group-count" min="1" max="12" placeholder="Grup Sayısı">
+                <button onclick="confirmGroupCount()">Grupları Oluştur</button>
+            </div>
+
+            <div class="step-3 hidden">
+                <h2>Oyuncuları Seç</h2>
+                <div id="player-selection-list" class="player-grid"></div>
+                <button onclick="finalizePlayers()">Oyuncuları Onayla</button>
+            </div>
+
+            <div class="step-4 hidden">
+                <h2>Grupları Düzenle</h2>
+                <p>İsterseniz oyuncuları sürükleyip bırakarak grupları değiştirebilirsiniz.</p>
+                <div id="groups-container" class="groups-container"></div>
+                <button onclick="startGame()" class="start-btn">Oyunu Başlat</button>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="hidden">
+            <header>
+                <div id="header-top-row"
+                    style="width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <div id="current-player-info">
+                        Sıradaki: <span id="current-player-name">-</span> (Grup <span
+                            id="current-player-group">-</span>)
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 20px;">
+                        <div id="game-status">
+                            Kalan Hak: <span id="remaining-turns">3</span>
+                        </div>
+                        <button onclick="quitGame()" class="btn-exit" title="Oyundan Çık">❌</button>
+                    </div>
+                </div>
+                <div id="scoreboard"
+                    style="width: 100%; display: flex; justify-content: center; gap: 20px; font-weight: bold; color: #2d3436;">
+                    <!-- Scores will be injected here -->
+                </div>
+                <button id="next-turn-btn" class="hidden" onclick="nextTurn()" style="margin-top: 10px;">Sıradaki
+                    Oyuncu</button>
+            </header>
+
+            <main>
+                <div id="card-grid" class="card-grid">
+                    <!-- Cards will be generated here -->
+                </div>
+            </main>
+        </div>
+
+        <!-- Question Modal -->
+        <div id="question-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="question-bubble" id="question-text">
+                    <!-- Question will appear here -->
+                </div>
+
+                <input type="text" id="answer-input" placeholder="Cevabınızı ingilizce yazın..." autocomplete="off">
+
+                <div class="modal-buttons">
+                    <button class="btn-oops" onclick="handleOops()">ooooopppppss</button>
+                    <button class="btn-okay" onclick="handleOkay()">oooooookkkkaaayyyyyy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
