@@ -575,11 +575,11 @@ footer {
 
 /* Aile Oyunu Kartı Özel Stili */
 .family-card {
-    background: rgba(20, 50, 20, 0.7);
-    /* Koyu yeşil arka plan */
-    border: 2px solid #00b894;
-    /* Yeşil neon çerçeve */
-    box-shadow: 0 0 15px rgba(0, 184, 148, 0.3);
+    background: rgba(255, 192, 203, 0.8);
+    /* Açık pembe arka plan */
+    border: 2px solid #ff69b4;
+    /* Pembe neon çerçeve */
+    box-shadow: 0 0 15px rgba(255, 105, 180, 0.3);
 }
 
 .family-card:hover {

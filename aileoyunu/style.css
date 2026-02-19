@@ -1,7 +1,7 @@
 :root {
     --primary-color: #6C5CE7;
     --secondary-color: #a29bfe;
-    --background-color: #dfe6e9;
+    --background-color: #ffe0e9;
     --card-back: #0984e3;
     --text-color: #2d3436;
     --font-family: 'Outfit', sans-serif;
@@ -17,6 +17,8 @@ body {
     align-items: center;
     min-height: 100vh;
 }
+
+
 
 .container {
     background: white;
