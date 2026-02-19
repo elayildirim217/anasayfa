@@ -572,3 +572,56 @@ footer {
     font-size: 0.75rem;
     box-shadow: 0 0 10px rgba(255, 0, 222, 0.5);
 }
+
+/* Aile Oyunu Kartı Özel Stili */
+.family-card {
+    background: rgba(20, 50, 20, 0.7);
+    /* Koyu yeşil arka plan */
+    border: 2px solid #00b894;
+    /* Yeşil neon çerçeve */
+    box-shadow: 0 0 15px rgba(0, 184, 148, 0.3);
+}
+
+.family-card:hover {
+    box-shadow: 0 0 35px rgba(0, 184, 148, 0.6);
+    border-color: #ffffff;
+}
+
+/* Yeşil Parlayan Metin */
+.green-text {
+    color: #00b894;
+    text-shadow: 0 0 15px rgba(0, 184, 148, 0.8);
+    font-family: 'Orbitron', sans-serif;
+    z-index: 2;
+}
+
+/* Aile İkonu Animasyonu */
+.family-icon {
+    font-size: 3rem;
+    position: absolute;
+    opacity: 0.4;
+    animation: gentle-bounce 3s ease-in-out infinite;
+}
+
+@keyframes gentle-bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Yeşil Rozet */
+.green-badge {
+    background: #00b894;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    box-shadow: 0 0 10px rgba(0, 184, 148, 0.5);
+}
