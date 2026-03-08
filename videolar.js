@@ -15,8 +15,8 @@ const videoCategories = {
         { title: "Cartoons Episode 2", id: "0987654321" }  // Placeholder
     ],
     movies: [
-        { title: "Funny Movie Clip", id: "abcdefghij" },    // Placeholder
-        { title: "Action Scene", id: "jklmnopqrs" }         // Placeholder
+        { title: "Funny Movie Test Videosu", id: "abcdefghij" },    // Placeholder
+        { title: "Action Scene Test Videosu", id: "jklmnopqrs" }         // Placeholder
     ],
     turkish: [
         { title: "Çocuk Şarkıları", id: "7654321098" },     // Placeholder
