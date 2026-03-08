@@ -8,8 +8,7 @@ const videoCategories = {
         { title: "Numbers 1-10", id: "DR-cfDsHCGA" }
     ],
     sports: [
-        { title: "Short Track Finali", id: "542312323" },
-        { title: "Milli Sporcumuz", id: "878765432" }
+        { title: "Spor Videosu", id: "k_jdgUC6koE" }
     ],
     series: [
         { title: "Cartoons Episode 1", id: "1234567890" }, // Placeholder
