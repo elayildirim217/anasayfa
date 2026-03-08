@@ -8,7 +8,7 @@ const videoCategories = {
         { title: "Numbers 1-10", id: "DR-cfDsHCGA" }
     ],
     sports: [
-        { title: "Spor Videosu", id: "k_jdgUC6koE" }
+        { title: "Short Track Test Videosu", id: "k_jdgUC6koE" }
     ],
     series: [
         { title: "Cartoons Episode 1", id: "1234567890" }, // Placeholder
