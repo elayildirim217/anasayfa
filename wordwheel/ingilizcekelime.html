@@ -1,95 +1,146 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Word Wheel - English Vocabulary Game</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 
 <body>
+    <!-- Confetti Canvas -->
+    <canvas id="confetti-canvas"></canvas>
+
     <div id="app">
         <!-- Landing Page: Group Generation -->
         <section id="landing-page" class="active">
+            <div class="landing-top-bar">
+                <a href="../oyunlar.html" class="nav-back-link" id="nav-back-landing">⬅️ Games Menu</a>
+                <div class="language-selector-wrapper">
+                    <span class="globe-icon">🌐</span>
+                    <select class="language-dropdown language-select" aria-label="Select Language">
+                        <option value="en" selected>🇬🇧 English</option>
+                        <option value="tr">🇹🇷 Türkçe</option>
+                        <option value="es">🇪🇸 Español</option>
+                        <option value="fr">🇫🇷 Français</option>
+                        <option value="de">🇩🇪 Deutsch</option>
+                        <option value="it">🇮🇹 Italiano</option>
+                        <option value="pt">🇵🇹 Português</option>
+                        <option value="ru">🇷🇺 Русский</option>
+                        <option value="ar">🇸🇦 العربية</option>
+                        <option value="zh">🇨🇳 中文</option>
+                        <option value="ja">🇯🇵 日本語</option>
+                        <option value="ko">🇰🇷 한국어</option>
+                    </select>
+                </div>
+            </div>
+
             <div id="fun-title" class="colorful-title"></div>
 
             <button id="generate-groups-btn" class="primary-btn">Create Groups</button>
             <div id="groups-container" class="groups-grid hidden"></div>
             <button id="start-game-btn" class="primary-btn hidden">Start Game</button>
             <div id="welcome-title" class="colorful-title" style="margin-top: 30px;"></div>
-
-
         </section>
 
         <!-- Game Page -->
         <section id="game-page" class="hidden">
             <header>
+                <div class="header-top">
+                    <a href="../oyunlar.html" class="nav-back-link" id="nav-back-game">⬅️ Games Menu</a>
+                    <div class="header-right-actions">
+                        <div class="language-selector-wrapper">
+                            <span class="globe-icon">🌐</span>
+                            <select class="language-dropdown language-select" aria-label="Select Language">
+                                <option value="en" selected>🇬🇧 English</option>
+                                <option value="tr">🇹🇷 Türkçe</option>
+                                <option value="es">🇪🇸 Español</option>
+                                <option value="fr">🇫🇷 Français</option>
+                                <option value="de">🇩🇪 Deutsch</option>
+                                <option value="it">🇮🇹 Italiano</option>
+                                <option value="pt">🇵🇹 Português</option>
+                                <option value="ru">🇷🇺 Русский</option>
+                                <option value="ar">🇸🇦 العربية</option>
+                                <option value="zh">🇨🇳 中文</option>
+                                <option value="ja">🇯🇵 日本語</option>
+                                <option value="ko">🇰🇷 한국어</option>
+                            </select>
+                        </div>
+                        <div class="round-badge" id="round-display">Round 1 / 4</div>
+                    </div>
+                </div>
+
                 <div class="score-board">
-                    <div class="team-score" id="score-team-1">Stars: 0</div>
-                    <div class="team-score" id="score-team-2">Hearts: 0</div>
-                    <div class="team-score" id="score-team-3">Shine: 0</div>
-                    <div class="team-score" id="score-team-4">Clouds: 0</div>
+                    <div class="team-score" id="score-team-1">
+                        <span class="team-icon">⭐</span>
+                        <span class="team-name">Stars:</span>
+                        <span class="score-num" id="val-team-1">0</span>
+                    </div>
+                    <div class="team-score" id="score-team-2">
+                        <span class="team-icon">💖</span>
+                        <span class="team-name">Hearts:</span>
+                        <span class="score-num" id="val-team-2">0</span>
+                    </div>
+                    <div class="team-score" id="score-team-3">
+                        <span class="team-icon">✨</span>
+                        <span class="team-name">Shine:</span>
+                        <span class="score-num" id="val-team-3">0</span>
+                    </div>
+                    <div class="team-score" id="score-team-4">
+                        <span class="team-icon">☁️</span>
+                        <span class="team-name">Clouds:</span>
+                        <span class="score-num" id="val-team-4">0</span>
+                    </div>
                 </div>
             </header>
 
             <div class="game-content">
+                <!-- Wheel Side -->
                 <div class="wheel-container">
                     <div class="wheel-pointer">⬇</div>
                     <canvas id="wheel-canvas" width="400" height="400"></canvas>
                     <button id="spin-btn">SPIN</button>
                 </div>
 
+                <!-- Baamboozle Question & Choices Side -->
                 <div class="question-area">
-                    <div id="current-player-display">Next: <span id="player-name">?</span></div>
-                    <div class="card-container">
-                        <div class="card" id="word-card">
-                            <div class="card-front">
-                                <span id="question-text">Question Ready</span>
-                            </div>
-                            <div class="card-back">
-                                <img id="word-image" src="" alt="Kelime Resmi">
-                                <p id="word-text"></p>
-                            </div>
+                    <div id="current-player-display">
+                        <span id="turn-label" class="turn-label">Turn:</span>
+                        <span id="player-name" class="player-highlight">Spin the Wheel!</span>
+                    </div>
+
+                    <!-- Question Card (Image Display) -->
+                    <div class="question-card" id="question-card">
+                        <div id="question-placeholder" class="question-placeholder">
+                            <div class="placeholder-icon">🎡</div>
+                            <div id="placeholder-text" class="placeholder-text">Spin the wheel to reveal the question!</div>
+                        </div>
+                        <div id="question-image-box" class="question-image-box hidden">
+                            <img id="word-image" src="" alt="Word Image">
                         </div>
                     </div>
-                    <div class="controls">
-                        <button id="next-word-btn" class="secondary-btn">Next Word</button>
-                        <button id="correct-btn" class="success-btn">Correct</button>
-                        <button id="wrong-btn" class="danger-btn">Wrong</button>
+
+                    <!-- Feedback message (Correct / Wrong) -->
+                    <div id="feedback-message" class="feedback-message hidden"></div>
+
+                    <!-- 3 Choices Buttons (Baamboozle Style - No A, B, C) -->
+                    <div id="choices-container" class="choices-container hidden">
+                        <!-- Rendered by JS -->
+                    </div>
+
+                    <!-- Game Controls -->
+                    <div class="game-controls">
+                        <button id="next-turn-btn" class="primary-btn hidden pulse-glow">Next Turn ➡️</button>
+                        <button id="skip-word-btn" class="secondary-btn hidden">Change Question 🔄</button>
                     </div>
                 </div>
             </div>
         </section>
-
-        <!-- Spelling Game Page -->
-        <section id="spelling-game-page" class="hidden">
-            <header>
-                <button id="back-to-menu-btn" class="secondary-btn">Back to Menu</button>
-                <div class="score-board">
-                    <div class="team-score">Correct: <span id="spelling-score">0</span></div>
-                </div>
-            </header>
-
-            <div class="spelling-content">
-                <div class="image-display">
-                    <img id="spelling-target-image" src="" alt="Target Object">
-                </div>
-
-                <div class="word-display" id="word-display">
-                    <!-- Letters will go here -->
-                </div>
-
-                <div class="keyboard-container" id="keyboard-container">
-                    <!-- Keys will be generated by JS -->
-                </div>
-            </div>
-
-            <!-- Popup Container -->
-            <div id="popup-container"></div>
-        </section>
     </div>
+
+    <!-- Script -->
     <script src="script.js"></script>
 </body>
 
