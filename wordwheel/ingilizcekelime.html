@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Word Wheel - English Vocabulary Game</title>
-    <link rel="stylesheet" href="style.css">
+    <!-- Cache-busting version query string -->
+    <link rel="stylesheet" href="style.css?v=2.2">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 
@@ -16,24 +17,30 @@
     <div id="app">
         <!-- Landing Page: Group Generation -->
         <section id="landing-page" class="active">
-            <div class="landing-top-bar">
-                <a href="../oyunlar.html" class="nav-back-link" id="nav-back-landing">⬅️ Games Menu</a>
-                <div class="language-selector-wrapper">
-                    <span class="globe-icon">🌐</span>
-                    <select class="language-dropdown language-select" aria-label="Select Language">
-                        <option value="en" selected>🇬🇧 English</option>
-                        <option value="tr">🇹🇷 Türkçe</option>
-                        <option value="es">🇪🇸 Español</option>
-                        <option value="fr">🇫🇷 Français</option>
-                        <option value="de">🇩🇪 Deutsch</option>
-                        <option value="it">🇮🇹 Italiano</option>
-                        <option value="pt">🇵🇹 Português</option>
-                        <option value="ru">🇷🇺 Русский</option>
-                        <option value="ar">🇸🇦 العربية</option>
-                        <option value="zh">🇨🇳 中文</option>
-                        <option value="ja">🇯🇵 日本語</option>
-                        <option value="ko">🇰🇷 한국어</option>
-                    </select>
+            <div class="top-nav-bar">
+                <a href="../oyunlar.html" class="nav-back-btn" id="nav-back-landing">⬅️ Games Menu</a>
+                
+                <!-- Custom Modern Language Selector -->
+                <div class="lang-selector-container">
+                    <button type="button" class="lang-btn" id="landing-lang-btn" aria-haspopup="true" aria-expanded="false">
+                        <span class="lang-globe">🌐</span>
+                        <span class="lang-current-label">English</span>
+                        <span class="lang-arrow">▾</span>
+                    </button>
+                    <div class="lang-dropdown-menu hidden" id="landing-lang-menu">
+                        <button type="button" class="lang-opt" data-lang="en">🇬🇧 English</button>
+                        <button type="button" class="lang-opt" data-lang="tr">🇹🇷 Türkçe</button>
+                        <button type="button" class="lang-opt" data-lang="es">🇪🇸 Español</button>
+                        <button type="button" class="lang-opt" data-lang="fr">🇫🇷 Français</button>
+                        <button type="button" class="lang-opt" data-lang="de">🇩🇪 Deutsch</button>
+                        <button type="button" class="lang-opt" data-lang="it">🇮🇹 Italiano</button>
+                        <button type="button" class="lang-opt" data-lang="pt">🇵🇹 Português</button>
+                        <button type="button" class="lang-opt" data-lang="ru">🇷🇺 Русский</button>
+                        <button type="button" class="lang-opt" data-lang="ar">🇸🇦 العربية</button>
+                        <button type="button" class="lang-opt" data-lang="zh">🇨🇳 中文</button>
+                        <button type="button" class="lang-opt" data-lang="ja">🇯🇵 日本語</button>
+                        <button type="button" class="lang-opt" data-lang="ko">🇰🇷 한국어</button>
+                    </div>
                 </div>
             </div>
 
@@ -47,28 +54,32 @@
 
         <!-- Game Page -->
         <section id="game-page" class="hidden">
-            <header>
-                <div class="header-top">
-                    <a href="../oyunlar.html" class="nav-back-link" id="nav-back-game">⬅️ Games Menu</a>
-                    <div class="header-right-actions">
-                        <div class="language-selector-wrapper">
-                            <span class="globe-icon">🌐</span>
-                            <select class="language-dropdown language-select" aria-label="Select Language">
-                                <option value="en" selected>🇬🇧 English</option>
-                                <option value="tr">🇹🇷 Türkçe</option>
-                                <option value="es">🇪🇸 Español</option>
-                                <option value="fr">🇫🇷 Français</option>
-                                <option value="de">🇩🇪 Deutsch</option>
-                                <option value="it">🇮🇹 Italiano</option>
-                                <option value="pt">🇵🇹 Português</option>
-                                <option value="ru">🇷🇺 Русский</option>
-                                <option value="ar">🇸🇦 العربية</option>
-                                <option value="zh">🇨🇳 中文</option>
-                                <option value="ja">🇯🇵 日本語</option>
-                                <option value="ko">🇰🇷 한국어</option>
-                            </select>
+            <header class="game-header">
+                <div class="top-nav-bar game-header-bar">
+                    <a href="../oyunlar.html" class="nav-back-btn" id="nav-back-game">⬅️ Games Menu</a>
+                    <div class="round-badge" id="round-display">Round 1 / 4</div>
+                    
+                    <!-- Custom Modern Language Selector -->
+                    <div class="lang-selector-container">
+                        <button type="button" class="lang-btn" id="game-lang-btn" aria-haspopup="true" aria-expanded="false">
+                            <span class="lang-globe">🌐</span>
+                            <span class="lang-current-label">English</span>
+                            <span class="lang-arrow">▾</span>
+                        </button>
+                        <div class="lang-dropdown-menu hidden" id="game-lang-menu">
+                            <button type="button" class="lang-opt" data-lang="en">🇬🇧 English</button>
+                            <button type="button" class="lang-opt" data-lang="tr">🇹🇷 Türkçe</button>
+                            <button type="button" class="lang-opt" data-lang="es">🇪🇸 Español</button>
+                            <button type="button" class="lang-opt" data-lang="fr">🇫🇷 Français</button>
+                            <button type="button" class="lang-opt" data-lang="de">🇩🇪 Deutsch</button>
+                            <button type="button" class="lang-opt" data-lang="it">🇮🇹 Italiano</button>
+                            <button type="button" class="lang-opt" data-lang="pt">🇵🇹 Português</button>
+                            <button type="button" class="lang-opt" data-lang="ru">🇷🇺 Русский</button>
+                            <button type="button" class="lang-opt" data-lang="ar">🇸🇦 العربية</button>
+                            <button type="button" class="lang-opt" data-lang="zh">🇨🇳 中文</button>
+                            <button type="button" class="lang-opt" data-lang="ja">🇯🇵 日本語</button>
+                            <button type="button" class="lang-opt" data-lang="ko">🇰🇷 한국어</button>
                         </div>
-                        <div class="round-badge" id="round-display">Round 1 / 4</div>
                     </div>
                 </div>
 
@@ -140,8 +151,8 @@
         </section>
     </div>
 
-    <!-- Script -->
-    <script src="script.js"></script>
+    <!-- Script with cache busting -->
+    <script src="script.js?v=2.2"></script>
 </body>
 
 </html>

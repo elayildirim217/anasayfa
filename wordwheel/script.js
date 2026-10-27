@@ -5,7 +5,7 @@
 
 // --- ÖĞRENCİ LİSTELERİ ---
 const boys = ["Arel", "Eren", "Mahir", "Çınar", "Ege", "Arda", "Mustafa", "Yiğit", "Ali", "Giray", "Ertuğrul", "Ömer", "Mehmet"];
-const girls = ["Ela", "Feraye", "Pelin", "Seray", "Defne", "Naz", "Derin", "Deniz", "Gülnihal", "İman"];
+const girls = ["Ela", "Feraye", "Pelin", "Seray", "Hira", "Elif Ada", "Naz", "Derin", "Deniz", "Gülnihal", "İman"];
 
 // --- 28 KELİME VE GÖRSELLERİ ---
 const unit1Words = [
