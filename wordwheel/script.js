@@ -307,6 +307,21 @@ const i18n = {
     }
 };
 
+const langLabels = {
+    en: "English",
+    tr: "Türkçe",
+    es: "Español",
+    fr: "Français",
+    de: "Deutsch",
+    it: "Italiano",
+    pt: "Português",
+    ru: "Русский",
+    ar: "العربية",
+    zh: "中文",
+    ja: "日本語",
+    ko: "한국어"
+};
+
 // Default language: English
 let currentLang = 'en';
 
@@ -332,9 +347,19 @@ function setLanguage(lang) {
     document.documentElement.dir = (lang === 'ar' ? 'rtl' : 'ltr');
     document.title = t('pageTitle');
 
-    // Sync all language dropdowns
-    document.querySelectorAll('.language-select').forEach(sel => {
-        sel.value = lang;
+    // Update labels on custom dropdowns
+    const labelText = langLabels[lang] || "English";
+    document.querySelectorAll('.lang-current-label').forEach(el => {
+        el.textContent = labelText;
+    });
+
+    // Update active state on options
+    document.querySelectorAll('.lang-opt').forEach(opt => {
+        if (opt.dataset.lang === lang) {
+            opt.classList.add('active');
+        } else {
+            opt.classList.remove('active');
+        }
     });
 
     // Update static texts
@@ -373,6 +398,46 @@ function setLanguage(lang) {
         resetQuestionAreaForSpin();
     }
     setupLandingPageTitles();
+}
+
+// Setup Custom Language Dropdowns
+function setupLanguageDropdowns() {
+    const pairs = [
+        { btn: document.getElementById('landing-lang-btn'), menu: document.getElementById('landing-lang-menu') },
+        { btn: document.getElementById('game-lang-btn'), menu: document.getElementById('game-lang-menu') }
+    ];
+
+    pairs.forEach(({ btn, menu }) => {
+        if (!btn || !menu) return;
+
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = !menu.classList.contains('hidden');
+            closeAllLanguageDropdowns();
+            if (!isOpen) {
+                menu.classList.remove('hidden');
+                btn.classList.add('open');
+            }
+        });
+
+        menu.querySelectorAll('.lang-opt').forEach(opt => {
+            opt.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const lang = opt.dataset.lang;
+                setLanguage(lang);
+                closeAllLanguageDropdowns();
+            });
+        });
+    });
+
+    document.addEventListener('click', () => {
+        closeAllLanguageDropdowns();
+    });
+}
+
+function closeAllLanguageDropdowns() {
+    document.querySelectorAll('.lang-dropdown-menu').forEach(menu => menu.classList.add('hidden'));
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('open'));
 }
 
 let activeWords = [];
@@ -421,13 +486,6 @@ startGameBtn.addEventListener('click', startGame);
 spinBtn.addEventListener('click', handleSpinClick);
 nextTurnBtn.addEventListener('click', advanceToNextTurn);
 skipWordBtn.addEventListener('click', loadNextWord);
-
-// Language dropdown listener
-document.querySelectorAll('.language-select').forEach(sel => {
-    sel.addEventListener('change', (e) => {
-        setLanguage(e.target.value);
-    });
-});
 
 // --- SES EFEKTLERİ (WEB AUDIO API) ---
 let audioCtx = null;
@@ -675,6 +733,19 @@ function drawWheel() {
     ctx.restore();
 }
 
+// --- TEPEDEKİ OKUN HİZASINDAKİ ÖĞRENCİYİ BULMA ---
+function getStudentUnderPointer(rotation) {
+    if (allStudents.length === 0) return null;
+    const numSegments = allStudents.length;
+    const arcSize = (2 * Math.PI) / numSegments;
+    const pointerAngle = 1.5 * Math.PI; // Tepedeki ok açısı (270°)
+
+    let localAngle = (pointerAngle - rotation) % (2 * Math.PI);
+    if (localAngle < 0) localAngle += 2 * Math.PI;
+    const idx = Math.floor(localAngle / arcSize) % numSegments;
+    return allStudents[idx];
+}
+
 // --- ÇARK DÖNDÜRME ---
 function handleSpinClick() {
     getAudioContext();
@@ -690,6 +761,8 @@ function handleSpinClick() {
 }
 
 function startGroupTurn() {
+    if (allStudents.length === 0) return;
+
     isSpinning = true;
     spinBtn.disabled = true;
 
@@ -700,42 +773,72 @@ function startGroupTurn() {
     nextTurnBtn.classList.add('hidden');
     skipWordBtn.classList.add('hidden');
 
-    let spinAngleStart = Math.random() * 10 + 16;
-    let spinTime = 0;
-    let spinTimeTotal = Math.random() * 1500 + 2500;
+    // 1. Mevcut takımın sıradaki öğrencisini belirle
+    const group = groups[currentGroupIndex];
+    const playerIndex = groupPlayerIndices[currentGroupIndex] % group.length;
+    selectedPlayer = group[playerIndex].name;
 
-    function rotateWheel() {
-        spinTime += 30;
-        if (spinTime >= spinTimeTotal) {
-            stopRotateWheel();
-            return;
-        }
-        let spinAngle = spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
-        currentRotation += (spinAngle * Math.PI / 180);
+    // 2. Çarkın tam bu öğrencinin diliminin ortasında durması için açıyı hesapla
+    const targetIndex = allStudents.indexOf(selectedPlayer);
+    const numSegments = allStudents.length;
+    const arcSize = (2 * Math.PI) / numSegments;
+    const pointerAngle = 1.5 * Math.PI; // Tepedeki ok açısı (270°)
+    const angleCenter = (targetIndex + 0.5) * arcSize;
+
+    let targetAngle = (pointerAngle - angleCenter) % (2 * Math.PI);
+    if (targetAngle < 0) targetAngle += 2 * Math.PI;
+
+    let currentNorm = currentRotation % (2 * Math.PI);
+    if (currentNorm < 0) currentNorm += 2 * Math.PI;
+
+    let diff = targetAngle - currentNorm;
+    if (diff < 0) diff += 2 * Math.PI;
+
+    // 5-6 tam tur atıp tam o öğrencinin üzerinde dursun
+    const extraSpins = (5 + Math.floor(Math.random() * 2)) * (2 * Math.PI);
+    const totalRotationToAdd = diff + extraSpins;
+    const startRotation = currentRotation;
+    const finalRotation = startRotation + totalRotationToAdd;
+
+    const spinDuration = 3200; // 3.2 saniye heyecanlı dönme animasyonu
+    let startTime = null;
+
+    function animateSpin(timestamp) {
+        if (!startTime) startTime = timestamp;
+        const elapsed = timestamp - startTime;
+        const progress = Math.min(elapsed / spinDuration, 1);
+
+        // Pürüzsüz yavaşlama (Quartic Ease-Out)
+        const ease = 1 - Math.pow(1 - progress, 4);
+        currentRotation = startRotation + totalRotationToAdd * ease;
         drawWheel();
-        requestAnimationFrame(rotateWheel);
+
+        if (progress < 1) {
+            requestAnimationFrame(animateSpin);
+        } else {
+            currentRotation = finalRotation;
+            drawWheel();
+            stopRotateWheel();
+        }
     }
 
-    function easeOut(t, b, c, d) {
-        let ts = (t /= d) * t;
-        let tc = ts * t;
-        return b + c * (tc + -3 * ts + 3 * t);
+    requestAnimationFrame(animateSpin);
+}
+
+function stopRotateWheel() {
+    isSpinning = false;
+    isQuestionAnswered = false;
+
+    // Çarkın tepedeki okun altına gelen öğrencisini doğrula
+    const landedStudent = getStudentUnderPointer(currentRotation);
+    if (landedStudent) {
+        selectedPlayer = landedStudent;
     }
 
-    function stopRotateWheel() {
-        isSpinning = false;
-        const group = groups[currentGroupIndex];
-        const playerIndex = groupPlayerIndices[currentGroupIndex] % group.length;
-        selectedPlayer = group[playerIndex].name;
-        isQuestionAnswered = false;
+    updateScoreBoard();
+    spinBtn.textContent = t('doneBtn');
 
-        updateScoreBoard();
-        spinBtn.textContent = t('doneBtn');
-
-        loadNextWord();
-    }
-
-    rotateWheel();
+    loadNextWord();
 }
 
 // --- BAAMBOOZLE SORU VE ŞIKLARI YÜKLEME ---
@@ -982,5 +1085,6 @@ window.addEventListener('DOMContentLoaded', () => {
         savedLang = localStorage.getItem('wordwheel_lang') || 'en';
     } catch (e) { }
 
+    setupLanguageDropdowns();
     setLanguage(savedLang);
 });
