@@ -6,13 +6,12 @@ let availableNames = [];
 let currentTargetNumber = 0;
 let currentPlayerName = "";
 
-// SABİT İSİMLER LİSTESİ BURAYA EKLENDİ
+// SABİT İSİMLER LİSTESİ (4/B Sınıfı)
 const CLASS_NAMES = [
     "Arel", "Eren", "Mahir", "Çınar", "Ege", "Arda", "Mustafa", "Yiğit", "Ali", "Giray",
-    "Ertuğrul", "Ömer", "Mehmet", "Ela", "Feraye", "Pelin", "Seray", "Defne", "Naz",
+    "Ertuğrul", "Ömer", "Mehmet", "Ela", "Feraye", "Pelin", "Seray", "Hira", "Elif Ada", "Naz",
     "Derin", "Deniz", "Gülnihal", "İman"
 ];
-// /SABİT İSİMLER LİSTESİ BURAYA EKLENDİ
 
 // DOM Elements
 const screens = {
