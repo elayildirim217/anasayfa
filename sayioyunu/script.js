@@ -284,7 +284,7 @@ function endGame(win) {
     nextRoundBtn.classList.remove('hidden');
 }
 
-// Gizli Sayı Gösterme Fonksiyonu (2 saniye)
+// Gizli Sayı Gösterme Fonksiyonu (küçük ve gizli, 2 saniye)
 let secretTimer = null;
 
 function showSecretNumber() {
@@ -294,28 +294,20 @@ function showSecretNumber() {
     const valEl = document.getElementById('secret-target-val');
 
     if (badge && valEl) {
-        valEl.textContent = currentTargetNumber;
+        valEl.textContent = `${currentTargetNumber}`;
         badge.classList.remove('hidden');
-        setTimeout(() => badge.classList.add('show'), 10);
+        badge.classList.add('show');
     }
-
-    // Ayrıca geri bildirim alanında da göster
-    feedbackArea.innerHTML = `🤫 <strong>Gizli Sayı: ${currentTargetNumber}</strong> ✨`;
-    feedbackArea.className = 'feedback hint secret-glow';
 
     if (secretTimer) {
         clearTimeout(secretTimer);
     }
 
-    // Tam 2 saniyeliğine gösterip ardından kapat
+    // Tam 2 saniyeliğine gösterip ardından sessizce gizle
     secretTimer = setTimeout(() => {
         if (badge) {
             badge.classList.remove('show');
-            setTimeout(() => badge.classList.add('hidden'), 250);
-        }
-        if (feedbackArea.classList.contains('secret-glow')) {
-            feedbackArea.textContent = '';
-            feedbackArea.className = 'feedback';
+            badge.classList.add('hidden');
         }
     }, 2000);
 }
