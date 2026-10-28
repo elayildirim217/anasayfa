@@ -7,20 +7,22 @@
 const boys = ["Arel", "Eren", "Mahir", "Çınar", "Ege", "Arda", "Mustafa", "Yiğit", "Ali", "Giray", "Ertuğrul", "Ömer", "Mehmet"];
 const girls = ["Ela", "Feraye", "Pelin", "Seray", "Hira", "Elif Ada", "Naz", "Derin", "Deniz", "Gülnihal", "İman"];
 
-// --- 7 ÜNİTE VE KELİME VERİLERİ (UNITS DATA) ---
-// SADECE KULLANICININ GÖNDERDİĞİ 28 KELİME VE GÖRSELLER
+// --- 3 ÜNİTE VE KELİME VERİLERİ (UNITS DATA) ---
+// SADECE KULLANICININ BELİRTTİĞİ 18 KELİME VE GÖRSELLER (3 ÜNİTE)
 const UNITS_DATA = [
     {
         id: 1,
         number: 1,
         nameEn: "Unit 1",
         nameTr: "1. Ünite",
-        icon: "🏠",
+        icon: "🏙️",
         words: [
-            { word: "Balcony", img: "images/Balcony.png" },
-            { word: "Bunk Beds", img: "images/Bunk+Beds.png" },
-            { word: "Fridge", img: "images/Fridge.png" },
-            { word: "Oven", img: "images/Oven.png" }
+            { word: "Airport", img: "images/Airport.png" },
+            { word: "Hotel", img: "images/Hotel.png" },
+            { word: "Restaurant", img: "images/Restaurant.png" },
+            { word: "Theater", img: "images/Theater.png" },
+            { word: "Transportation", img: "images/Transportation.png" },
+            { word: "Skyscraper", img: "images/Skyscraper.png" }
         ]
     },
     {
@@ -28,12 +30,14 @@ const UNITS_DATA = [
         number: 2,
         nameEn: "Unit 2",
         nameTr: "2. Ünite",
-        icon: "🚿",
+        icon: "🎒",
         words: [
-            { word: "Roof", img: "images/Roof.png" },
-            { word: "Shelf", img: "images/Shelf.png" },
-            { word: "Shower", img: "images/Shower.png" },
-            { word: "Wash", img: "images/Wash.png" }
+            { word: "Go Away", img: "images/Go Away.png" },
+            { word: "Pack", img: "images/Pack.png" },
+            { word: "Study", img: "images/Study.png" },
+            { word: "Actor", img: "images/Actor.png" },
+            { word: "Pilot", img: "images/Pilot.png" },
+            { word: "University", img: "images/University.png" }
         ]
     },
     {
@@ -41,64 +45,14 @@ const UNITS_DATA = [
         number: 3,
         nameEn: "Unit 3",
         nameTr: "3. Ünite",
-        icon: "💼",
+        icon: "🏆",
         words: [
-            { word: "Actor", img: "images/Actor.png" },
-            { word: "Pilot", img: "images/Pilot.png" },
-            { word: "Instructor", img: "images/Instructor.png" },
-            { word: "Study", img: "images/Study.png" }
-        ]
-    },
-    {
-        id: 4,
-        number: 4,
-        nameEn: "Unit 4",
-        nameTr: "4. Ünite",
-        icon: "🚴",
-        words: [
-            { word: "Biking", img: "images/biking.png" },
             { word: "Breakdancing", img: "images/Breakdancing.png" },
-            { word: "Competition", img: "images/competition.png" },
-            { word: "Golf", img: "images/Golf.png" }
-        ]
-    },
-    {
-        id: 5,
-        number: 5,
-        nameEn: "Unit 5",
-        nameTr: "5. Ünite",
-        icon: "🏙️",
-        words: [
-            { word: "Skyscraper", img: "images/Skyscraper.png" },
-            { word: "Theater", img: "images/Theater.png" },
-            { word: "University", img: "images/University.png" },
-            { word: "Restaurant", img: "images/Restaurant.png" }
-        ]
-    },
-    {
-        id: 6,
-        number: 6,
-        nameEn: "Unit 6",
-        nameTr: "6. Ünite",
-        icon: "✈️",
-        words: [
-            { word: "Airport", img: "images/Airport.png" },
-            { word: "Hotel", img: "images/Hotel.png" },
-            { word: "Go Away", img: "images/Go Away.png" },
-            { word: "Pack", img: "images/Pack.png" }
-        ]
-    },
-    {
-        id: 7,
-        number: 7,
-        nameEn: "Unit 7",
-        nameTr: "7. Ünite",
-        icon: "💻",
-        words: [
             { word: "Coding", img: "images/coding.png" },
-            { word: "Internet", img: "images/Internet.png" },
-            { word: "Laptop", img: "images/Laptop.png" },
-            { word: "Transportation", img: "images/Transportation.png" }
+            { word: "Competition", img: "images/competition.png" },
+            { word: "Golf", img: "images/Golf.png" },
+            { word: "Instructor", img: "images/Instructor.png" },
+            { word: "Biking", img: "images/biking.png" }
         ]
     }
 ];
@@ -141,7 +95,7 @@ const i18n = {
         unitsSidebarTitle: "Unit Selection",
         unitsSidebarDesc: "Select one unit or choose multiple units to practice them in mixed mode!",
         presetAllUnits: "Mix All Units",
-        presetFirst3Units: "Units 1 - 3",
+        presetFirst3Units: "Units 1 & 2",
         presetUnit1Only: "Unit 1 Only",
         doneApplyBtn: "Done & Apply",
         landingUnitsHeading: "Choose Units to Play",
@@ -150,7 +104,8 @@ const i18n = {
         unitLabel: "Unit",
         wordsCountSuffix: "words",
         onlyThisBtn: "Only this",
-        allUnitsSelectedSummary: (words) => `All 7 units selected (${words} words • Mixed Mode)`,
+        allUnitsSelectedSummary: (words) => `All 3 units selected (${words} words • Mixed Mode)`,
+        allUnitsMixed: "All Units (Mix)",
         multiUnitsSelectedSummary: (units, words) => `${units} units selected (${words} words • Mixed Mode)`,
         singleUnitSelectedSummary: (unitNum, words) => `Unit ${unitNum} selected (${words} words • Single Mode)`,
         unitActiveChip: (count, isMix) => isMix ? `Mix (${count} Units)` : `Unit ${count}`,
@@ -181,7 +136,7 @@ const i18n = {
         unitsSidebarTitle: "Ünite Seçimi",
         unitsSidebarDesc: "İster tek bir ünite seçin, ister birden fazla ünite seçerek karışık oynayın!",
         presetAllUnits: "Tüm Üniteler (Karışık)",
-        presetFirst3Units: "1 - 3. Üniteler",
+        presetFirst3Units: "1 ve 2. Üniteler",
         presetUnit1Only: "Sadece 1. Ünite",
         doneApplyBtn: "Tamam & Uygula",
         landingUnitsHeading: "Oynanacak Üniteleri Seçin",
@@ -190,7 +145,8 @@ const i18n = {
         unitLabel: "Ünite",
         wordsCountSuffix: "kelime",
         onlyThisBtn: "Sadece bu",
-        allUnitsSelectedSummary: (words) => `Tüm 7 ünite seçili (${words} kelime • Karışık Mod)`,
+        allUnitsSelectedSummary: (words) => `Tüm 3 ünite seçili (${words} kelime • Karışık Mod)`,
+        allUnitsMixed: "Tüm Üniteler (Karışık)",
         multiUnitsSelectedSummary: (units, words) => `${units} ünite seçildi (${words} kelime • Karışık Mod)`,
         singleUnitSelectedSummary: (unitNum, words) => `${unitNum}. Ünite seçildi (${words} kelime • Normal Mod)`,
         unitActiveChip: (count, isMix) => isMix ? `Karışık (${count} Ünite)` : `${count}. Ünite`,
@@ -625,7 +581,7 @@ const skipWordBtn = document.getElementById('skip-word-btn');
 const questionUnitBadge = document.getElementById('question-unit-badge');
 
 // Unit Selection DOM Elements
-let selectedUnitIds = [1, 2, 3, 4, 5, 6, 7]; // Default: all units (Karışık / Mixed)
+let selectedUnitIds = UNITS_DATA.map(u => u.id); // Default: all 3 units (Karışık / Mixed) [1, 2, 3]
 
 const floatingUnitsBtn = document.getElementById('floating-units-btn');
 const floatingUnitsBadge = document.getElementById('floating-units-badge');
@@ -709,7 +665,7 @@ function selectAllUnits() {
 }
 
 function selectFirst3Units() {
-    selectedUnitIds = [1, 2, 3];
+    selectedUnitIds = [1, 2];
     onUnitsSelectionChanged();
 }
 
@@ -753,11 +709,11 @@ function rebuildActiveWords(keepCurrent = false) {
 
 function renderUnitsUI() {
     const isAll = selectedUnitIds.length === UNITS_DATA.length;
-    const isFirst3 = selectedUnitIds.length === 3 && [1, 2, 3].every(id => selectedUnitIds.includes(id));
+    const isUnits12 = selectedUnitIds.length === 2 && [1, 2].every(id => selectedUnitIds.includes(id));
     const isSingleUnit1 = selectedUnitIds.length === 1 && selectedUnitIds[0] === 1;
 
     if (presetAllBtn) presetAllBtn.classList.toggle('active', isAll);
-    if (presetFirst3Btn) presetFirst3Btn.classList.toggle('active', isFirst3);
+    if (presetFirst3Btn) presetFirst3Btn.classList.toggle('active', isUnits12);
     if (presetUnit1Btn) presetUnit1Btn.classList.toggle('active', isSingleUnit1);
 
     if (landingQuickAll) landingQuickAll.classList.toggle('active', isAll);
@@ -770,7 +726,7 @@ function renderUnitsUI() {
     if (isAll) {
         summaryText = t('allUnitsSelectedSummary', totalWords);
         chipText = t('allUnitsMixed');
-        if (floatingUnitsBadge) floatingUnitsBadge.textContent = "All";
+        if (floatingUnitsBadge) floatingUnitsBadge.textContent = `${UNITS_DATA.length}`;
     } else if (selectedUnitIds.length === 1) {
         const u = UNITS_DATA.find(x => x.id === selectedUnitIds[0]);
         const num = u ? u.number : selectedUnitIds[0];

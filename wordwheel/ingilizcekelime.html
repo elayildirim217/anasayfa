@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Word Wheel - English Vocabulary Game</title>
     <!-- Cache-busting version query string -->
-    <link rel="stylesheet" href="style.css?v=3.0">
+    <link rel="stylesheet" href="style.css?v=3.3">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 
@@ -18,7 +18,7 @@
     <button type="button" id="floating-units-btn" class="floating-units-btn" aria-label="Units">
         <span class="btn-icon">📚</span>
         <span class="btn-label" id="floating-units-label">Units</span>
-        <span class="btn-badge" id="floating-units-badge">All</span>
+        <span class="btn-badge" id="floating-units-badge">3</span>
     </button>
 
     <!-- Slide-over Drawer / Sidebar for Units -->
@@ -30,7 +30,7 @@
                     <span class="sidebar-emoji">📚</span>
                     <div>
                         <h2 id="sidebar-title">Unit Selection</h2>
-                        <span class="sidebar-sub-badge" id="sidebar-active-summary">All Units • Mixed</span>
+                        <span class="sidebar-sub-badge" id="sidebar-active-summary">All 3 Units • Mixed</span>
                     </div>
                 </div>
                 <button type="button" id="close-units-sidebar" class="sidebar-close-btn" aria-label="Close">✕</button>
@@ -45,10 +45,10 @@
                     <span>🎲</span> <span id="preset-all-label">Mix All Units</span>
                 </button>
                 <button type="button" class="preset-btn" id="preset-first3-btn">
-                    <span>🎯</span> <span id="preset-first3-label">Units 1 - 3</span>
+                    <span>🎯</span> <span id="preset-first3-label">Units 1 & 2</span>
                 </button>
                 <button type="button" class="preset-btn" id="preset-unit1-btn">
-                    <span>🏠</span> <span id="preset-unit1-label">Unit 1 Only</span>
+                    <span>🏙️</span> <span id="preset-unit1-label">Unit 1 Only</span>
                 </button>
             </div>
 
@@ -115,7 +115,7 @@
 
                 <div class="units-selection-status" id="units-selection-status">
                     <span class="status-indicator"></span>
-                    <span id="units-status-text">All units selected (43 words) • Mixed Mode</span>
+                    <span id="units-status-text">All units selected (18 words) • Mixed Mode</span>
                 </div>
             </div>
 
@@ -202,7 +202,7 @@
 
                     <!-- Question Card (Image Display) -->
                     <div class="question-card" id="question-card">
-                        <div id="question-unit-badge" class="question-unit-badge hidden">🏠 Unit 1</div>
+                        <div id="question-unit-badge" class="question-unit-badge hidden">🏙️ Unit 1</div>
                         <div id="question-placeholder" class="question-placeholder">
                             <div class="placeholder-icon">🎡</div>
                             <div id="placeholder-text" class="placeholder-text">Spin the wheel to reveal the question!</div>
@@ -231,7 +231,7 @@
     </div>
 
     <!-- Script with cache busting -->
-    <script src="script.js?v=3.0"></script>
+    <script src="script.js?v=3.3"></script>
 </body>
 
 </html>
