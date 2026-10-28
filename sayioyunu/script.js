@@ -66,10 +66,31 @@ startGameBtn.addEventListener('click', () => {
     switchScreen('selection');
 });
 
-// Skip Player
-skipBtn.addEventListener('click', () => {
-    pickNextPlayer();
-});
+// Skip Player ("Gelmedi / Atla")
+skipBtn.addEventListener('click', skipCurrentPlayer);
+
+function skipCurrentPlayer() {
+    if (currentPlayerName) {
+        // "Gelmedi / Atla" denen öğrenciyi hem mevcut turdan hem de ana listeden kalıcı olarak çıkar
+        const availIdx = availableNames.indexOf(currentPlayerName);
+        if (availIdx > -1) {
+            availableNames.splice(availIdx, 1);
+        }
+
+        const nameIdx = names.indexOf(currentPlayerName);
+        if (nameIdx > -1) {
+            names.splice(nameIdx, 1);
+        }
+    }
+
+    if (names.length === 0) {
+        alert("Listede hiç oyuncu kalmadı!");
+        switchScreen('entry');
+        return;
+    }
+
+    pickNextPlayer(true);
+}
 
 // Confirm Player (Go to Game)
 confirmPlayerBtn.addEventListener('click', () => {
@@ -156,10 +177,18 @@ function startNewGame() {
     console.log("Yeni Hedef Sayı:", currentTargetNumber);
 }
 
-function pickNextPlayer() {
+function pickNextPlayer(isSkip = false) {
+    if (names.length === 0) {
+        alert("Listede hiç oyuncu kalmadı!");
+        switchScreen('entry');
+        return;
+    }
+
     if (availableNames.length === 0) {
         // If everyone guessed and no one won, restart the cycle (but keep the number!)
-        alert("Tur bitti! Kimse bilemedi. Sıra tekrar başa dönüyor.");
+        if (!isSkip) {
+            alert("Tur bitti! Kimse bilemedi. Sıra tekrar başa dönüyor.");
+        }
         availableNames = [...names];
     }
 
