@@ -7,37 +7,112 @@
 const boys = ["Arel", "Eren", "Mahir", "Çınar", "Ege", "Arda", "Mustafa", "Yiğit", "Ali", "Giray", "Ertuğrul", "Ömer", "Mehmet"];
 const girls = ["Ela", "Feraye", "Pelin", "Seray", "Hira", "Elif Ada", "Naz", "Derin", "Deniz", "Gülnihal", "İman"];
 
-// --- 28 KELİME VE GÖRSELLERİ ---
-const unit1Words = [
-    { word: "Actor", img: "images/Actor.png" },
-    { word: "Airport", img: "images/Airport.png" },
-    { word: "Balcony", img: "images/Balcony.png" },
-    { word: "Biking", img: "images/biking.png" },
-    { word: "Breakdancing", img: "images/Breakdancing.png" },
-    { word: "Bunk Beds", img: "images/Bunk+Beds.png" },
-    { word: "Coding", img: "images/coding.png" },
-    { word: "Competition", img: "images/competition.png" },
-    { word: "Fridge", img: "images/Fridge.png" },
-    { word: "Go Away", img: "images/Go Away.png" },
-    { word: "Golf", img: "images/Golf.png" },
-    { word: "Hotel", img: "images/Hotel.png" },
-    { word: "Instructor", img: "images/Instructor.png" },
-    { word: "Internet", img: "images/Internet.png" },
-    { word: "Laptop", img: "images/Laptop.png" },
-    { word: "Oven", img: "images/Oven.png" },
-    { word: "Pack", img: "images/Pack.png" },
-    { word: "Pilot", img: "images/Pilot.png" },
-    { word: "Restaurant", img: "images/Restaurant.png" },
-    { word: "Roof", img: "images/Roof.png" },
-    { word: "Shelf", img: "images/Shelf.png" },
-    { word: "Shower", img: "images/Shower.png" },
-    { word: "Skyscraper", img: "images/Skyscraper.png" },
-    { word: "Study", img: "images/Study.png" },
-    { word: "Theater", img: "images/Theater.png" },
-    { word: "Transportation", img: "images/Transportation.png" },
-    { word: "University", img: "images/University.png" },
-    { word: "Wash", img: "images/Wash.png" }
+// --- 7 ÜNİTE VE KELİME VERİLERİ (UNITS DATA) ---
+// SADECE KULLANICININ GÖNDERDİĞİ 28 KELİME VE GÖRSELLER
+const UNITS_DATA = [
+    {
+        id: 1,
+        number: 1,
+        nameEn: "Unit 1",
+        nameTr: "1. Ünite",
+        icon: "🏠",
+        words: [
+            { word: "Balcony", img: "images/Balcony.png" },
+            { word: "Bunk Beds", img: "images/Bunk+Beds.png" },
+            { word: "Fridge", img: "images/Fridge.png" },
+            { word: "Oven", img: "images/Oven.png" }
+        ]
+    },
+    {
+        id: 2,
+        number: 2,
+        nameEn: "Unit 2",
+        nameTr: "2. Ünite",
+        icon: "🚿",
+        words: [
+            { word: "Roof", img: "images/Roof.png" },
+            { word: "Shelf", img: "images/Shelf.png" },
+            { word: "Shower", img: "images/Shower.png" },
+            { word: "Wash", img: "images/Wash.png" }
+        ]
+    },
+    {
+        id: 3,
+        number: 3,
+        nameEn: "Unit 3",
+        nameTr: "3. Ünite",
+        icon: "💼",
+        words: [
+            { word: "Actor", img: "images/Actor.png" },
+            { word: "Pilot", img: "images/Pilot.png" },
+            { word: "Instructor", img: "images/Instructor.png" },
+            { word: "Study", img: "images/Study.png" }
+        ]
+    },
+    {
+        id: 4,
+        number: 4,
+        nameEn: "Unit 4",
+        nameTr: "4. Ünite",
+        icon: "🚴",
+        words: [
+            { word: "Biking", img: "images/biking.png" },
+            { word: "Breakdancing", img: "images/Breakdancing.png" },
+            { word: "Competition", img: "images/competition.png" },
+            { word: "Golf", img: "images/Golf.png" }
+        ]
+    },
+    {
+        id: 5,
+        number: 5,
+        nameEn: "Unit 5",
+        nameTr: "5. Ünite",
+        icon: "🏙️",
+        words: [
+            { word: "Skyscraper", img: "images/Skyscraper.png" },
+            { word: "Theater", img: "images/Theater.png" },
+            { word: "University", img: "images/University.png" },
+            { word: "Restaurant", img: "images/Restaurant.png" }
+        ]
+    },
+    {
+        id: 6,
+        number: 6,
+        nameEn: "Unit 6",
+        nameTr: "6. Ünite",
+        icon: "✈️",
+        words: [
+            { word: "Airport", img: "images/Airport.png" },
+            { word: "Hotel", img: "images/Hotel.png" },
+            { word: "Go Away", img: "images/Go Away.png" },
+            { word: "Pack", img: "images/Pack.png" }
+        ]
+    },
+    {
+        id: 7,
+        number: 7,
+        nameEn: "Unit 7",
+        nameTr: "7. Ünite",
+        icon: "💻",
+        words: [
+            { word: "Coding", img: "images/coding.png" },
+            { word: "Internet", img: "images/Internet.png" },
+            { word: "Laptop", img: "images/Laptop.png" },
+            { word: "Transportation", img: "images/Transportation.png" }
+        ]
+    }
 ];
+
+function getAllWords() {
+    return UNITS_DATA.flatMap(u => u.words.map(w => ({
+        ...w,
+        unitId: u.id,
+        unitNumber: u.number,
+        unitNameEn: u.nameEn,
+        unitNameTr: u.nameTr,
+        unitIcon: u.icon
+    })));
+}
 
 // --- ÇOKLU DİL SİSTEMİ (i18n) ---
 const i18n = {
@@ -61,7 +136,25 @@ const i18n = {
         alertAnswerFirst: "Please answer the current question or click 'Next Turn' first.",
         gameOverTitle: "Congratulations!",
         gameOverWinner: (winners) => `<strong>${winners}</strong> Team Won! 🎉`,
-        landingTitles: ["ARE YOU READY", "TO HAVE FUN?", "WELCOME TO THE", "WORD WHEEL GAME"]
+        landingTitles: ["ARE YOU READY", "TO HAVE FUN?", "WELCOME TO THE", "WORD WHEEL GAME"],
+        unitsBtn: "Units",
+        unitsSidebarTitle: "Unit Selection",
+        unitsSidebarDesc: "Select one unit or choose multiple units to practice them in mixed mode!",
+        presetAllUnits: "Mix All Units",
+        presetFirst3Units: "Units 1 - 3",
+        presetUnit1Only: "Unit 1 Only",
+        doneApplyBtn: "Done & Apply",
+        landingUnitsHeading: "Choose Units to Play",
+        mixAllMode: "🎲 Mix All",
+        customMode: "⚙️ Custom Selection",
+        unitLabel: "Unit",
+        wordsCountSuffix: "words",
+        onlyThisBtn: "Only this",
+        allUnitsSelectedSummary: (words) => `All 7 units selected (${words} words • Mixed Mode)`,
+        multiUnitsSelectedSummary: (units, words) => `${units} units selected (${words} words • Mixed Mode)`,
+        singleUnitSelectedSummary: (unitNum, words) => `Unit ${unitNum} selected (${words} words • Single Mode)`,
+        unitActiveChip: (count, isMix) => isMix ? `Mix (${count} Units)` : `Unit ${count}`,
+        questionUnitTag: (num) => `Unit ${num}`
     },
     tr: {
         pageTitle: "Word Wheel - İngilizce Kelime Oyunu",
@@ -83,7 +176,25 @@ const i18n = {
         alertAnswerFirst: "Lütfen önce mevcut soruyu yanıtlayın veya 'Sıradaki Tur'a geçin.",
         gameOverTitle: "Tebrikler!",
         gameOverWinner: (winners) => `<strong>${winners}</strong> Takımı Kazandı! 🎉`,
-        landingTitles: ["HAZIR MISINIZ", "EĞLENMEYE?", "HOŞ GELDİNİZ", "KELİME ÇARKINA"]
+        landingTitles: ["HAZIR MISINIZ", "EĞLENMEYE?", "HOŞ GELDİNİZ", "KELİME ÇARKINA"],
+        unitsBtn: "Üniteler",
+        unitsSidebarTitle: "Ünite Seçimi",
+        unitsSidebarDesc: "İster tek bir ünite seçin, ister birden fazla ünite seçerek karışık oynayın!",
+        presetAllUnits: "Tüm Üniteler (Karışık)",
+        presetFirst3Units: "1 - 3. Üniteler",
+        presetUnit1Only: "Sadece 1. Ünite",
+        doneApplyBtn: "Tamam & Uygula",
+        landingUnitsHeading: "Oynanacak Üniteleri Seçin",
+        mixAllMode: "🎲 Tümünü Karıştır",
+        customMode: "⚙️ Özel Seçim",
+        unitLabel: "Ünite",
+        wordsCountSuffix: "kelime",
+        onlyThisBtn: "Sadece bu",
+        allUnitsSelectedSummary: (words) => `Tüm 7 ünite seçili (${words} kelime • Karışık Mod)`,
+        multiUnitsSelectedSummary: (units, words) => `${units} ünite seçildi (${words} kelime • Karışık Mod)`,
+        singleUnitSelectedSummary: (unitNum, words) => `${unitNum}. Ünite seçildi (${words} kelime • Normal Mod)`,
+        unitActiveChip: (count, isMix) => isMix ? `Karışık (${count} Ünite)` : `${count}. Ünite`,
+        questionUnitTag: (num) => `${num}. Ünite`
     },
     es: {
         pageTitle: "Word Wheel - Juego de Vocabulario en Inglés",
@@ -392,12 +503,46 @@ function setLanguage(lang) {
         }
     }
 
+    // Unit selector UI texts
+    const floatingUnitsLabel = document.getElementById('floating-units-label');
+    if (floatingUnitsLabel) floatingUnitsLabel.textContent = t('unitsBtn');
+
+    const sidebarTitle = document.getElementById('sidebar-title');
+    if (sidebarTitle) sidebarTitle.textContent = t('unitsSidebarTitle');
+
+    const sidebarDescText = document.getElementById('sidebar-desc-text');
+    if (sidebarDescText) sidebarDescText.textContent = t('unitsSidebarDesc');
+
+    const presetAllLabel = document.getElementById('preset-all-label');
+    if (presetAllLabel) presetAllLabel.textContent = t('presetAllUnits');
+
+    const presetFirst3Label = document.getElementById('preset-first3-label');
+    if (presetFirst3Label) presetFirst3Label.textContent = t('presetFirst3Units');
+
+    const presetUnit1Label = document.getElementById('preset-unit1-label');
+    if (presetUnit1Label) presetUnit1Label.textContent = t('presetUnit1Only');
+
+    const sidebarDoneLabel = document.getElementById('sidebar-done-label');
+    if (sidebarDoneLabel) sidebarDoneLabel.textContent = t('doneApplyBtn');
+
+    const landingUnitsHeading = document.getElementById('landing-units-heading');
+    if (landingUnitsHeading) landingUnitsHeading.textContent = t('landingUnitsHeading');
+
+    const landingQuickAll = document.getElementById('landing-quick-all');
+    if (landingQuickAll) landingQuickAll.textContent = t('mixAllMode');
+
+    const landingQuickCustom = document.getElementById('landing-quick-custom');
+    if (landingQuickCustom) landingQuickCustom.textContent = t('customMode');
+
     // Scoreboard & dynamic labels
     updateScoreBoard();
     if (!selectedPlayer && !isSpinning) {
         resetQuestionAreaForSpin();
     }
     setupLandingPageTitles();
+    if (typeof renderUnitsUI === 'function') {
+        renderUnitsUI();
+    }
 }
 
 // Setup Custom Language Dropdowns
@@ -477,6 +622,32 @@ const choicesContainer = document.getElementById('choices-container');
 const feedbackMessage = document.getElementById('feedback-message');
 const nextTurnBtn = document.getElementById('next-turn-btn');
 const skipWordBtn = document.getElementById('skip-word-btn');
+const questionUnitBadge = document.getElementById('question-unit-badge');
+
+// Unit Selection DOM Elements
+let selectedUnitIds = [1, 2, 3, 4, 5, 6, 7]; // Default: all units (Karışık / Mixed)
+
+const floatingUnitsBtn = document.getElementById('floating-units-btn');
+const floatingUnitsBadge = document.getElementById('floating-units-badge');
+const unitsSidebar = document.getElementById('units-sidebar');
+const unitsSidebarBackdrop = document.getElementById('units-sidebar-backdrop');
+const closeUnitsSidebarBtn = document.getElementById('close-units-sidebar');
+const sidebarDoneBtn = document.getElementById('sidebar-done-btn');
+const sidebarUnitsList = document.getElementById('sidebar-units-list');
+const sidebarActiveSummary = document.getElementById('sidebar-active-summary');
+
+const landingUnitsCard = document.getElementById('landing-units-card');
+const landingUnitsGrid = document.getElementById('landing-units-grid');
+const landingQuickAll = document.getElementById('landing-quick-all');
+const landingQuickCustom = document.getElementById('landing-quick-custom');
+const unitsStatusText = document.getElementById('units-status-text');
+
+const presetAllBtn = document.getElementById('preset-all-btn');
+const presetFirst3Btn = document.getElementById('preset-first3-btn');
+const presetUnit1Btn = document.getElementById('preset-unit1-btn');
+
+const gameUnitChip = document.getElementById('game-unit-chip');
+const gameUnitChipText = document.getElementById('game-unit-chip-text');
 
 let ctx;
 
@@ -486,6 +657,216 @@ startGameBtn.addEventListener('click', startGame);
 spinBtn.addEventListener('click', handleSpinClick);
 nextTurnBtn.addEventListener('click', advanceToNextTurn);
 skipWordBtn.addEventListener('click', loadNextWord);
+
+// --- ÜNİTE SİSTEMİ MANTIĞI (UNIT SYSTEM LOGIC) ---
+function initUnitsSystem() {
+    if (floatingUnitsBtn) floatingUnitsBtn.addEventListener('click', openUnitsSidebar);
+    if (closeUnitsSidebarBtn) closeUnitsSidebarBtn.addEventListener('click', closeUnitsSidebar);
+    if (unitsSidebarBackdrop) unitsSidebarBackdrop.addEventListener('click', closeUnitsSidebar);
+    if (sidebarDoneBtn) sidebarDoneBtn.addEventListener('click', closeUnitsSidebar);
+    if (gameUnitChip) gameUnitChip.addEventListener('click', openUnitsSidebar);
+
+    if (presetAllBtn) presetAllBtn.addEventListener('click', selectAllUnits);
+    if (presetFirst3Btn) presetFirst3Btn.addEventListener('click', selectFirst3Units);
+    if (presetUnit1Btn) presetUnit1Btn.addEventListener('click', () => selectSingleUnit(1));
+
+    if (landingQuickAll) landingQuickAll.addEventListener('click', selectAllUnits);
+    if (landingQuickCustom) landingQuickCustom.addEventListener('click', openUnitsSidebar);
+
+    renderUnitsUI();
+}
+
+function openUnitsSidebar() {
+    if (!unitsSidebar) return;
+    unitsSidebar.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeUnitsSidebar() {
+    if (!unitsSidebar) return;
+    unitsSidebar.classList.add('hidden');
+    document.body.style.overflow = '';
+}
+
+function toggleUnit(unitId) {
+    const idx = selectedUnitIds.indexOf(unitId);
+    if (idx > -1) {
+        if (selectedUnitIds.length > 1) {
+            selectedUnitIds.splice(idx, 1);
+        } else {
+            return; // En az 1 ünite seçili kalmalı
+        }
+    } else {
+        selectedUnitIds.push(unitId);
+        selectedUnitIds.sort((a, b) => a - b);
+    }
+    onUnitsSelectionChanged();
+}
+
+function selectAllUnits() {
+    selectedUnitIds = UNITS_DATA.map(u => u.id);
+    onUnitsSelectionChanged();
+}
+
+function selectFirst3Units() {
+    selectedUnitIds = [1, 2, 3];
+    onUnitsSelectionChanged();
+}
+
+function selectSingleUnit(unitId) {
+    selectedUnitIds = [unitId];
+    onUnitsSelectionChanged();
+}
+
+function onUnitsSelectionChanged() {
+    renderUnitsUI();
+    if (!gamePage.classList.contains('hidden')) {
+        rebuildActiveWords(true);
+    }
+}
+
+function getSelectedWords() {
+    const selected = UNITS_DATA.filter(u => selectedUnitIds.includes(u.id));
+    return selected.flatMap(u => u.words.map(w => ({
+        ...w,
+        unitId: u.id,
+        unitNumber: u.number,
+        unitName: (currentLang === 'tr' ? u.nameTr : u.nameEn),
+        unitIcon: u.icon
+    })));
+}
+
+function rebuildActiveWords(keepCurrent = false) {
+    const wordsPool = getSelectedWords();
+    if (wordsPool.length === 0) return;
+
+    let expanded = [];
+    while (expanded.length < 28 && wordsPool.length > 0) {
+        expanded = expanded.concat(shuffleArray(wordsPool));
+    }
+    activeWords = expanded;
+
+    if (!keepCurrent) {
+        currentWordIndex = -1;
+    }
+}
+
+function renderUnitsUI() {
+    const isAll = selectedUnitIds.length === UNITS_DATA.length;
+    const isFirst3 = selectedUnitIds.length === 3 && [1, 2, 3].every(id => selectedUnitIds.includes(id));
+    const isSingleUnit1 = selectedUnitIds.length === 1 && selectedUnitIds[0] === 1;
+
+    if (presetAllBtn) presetAllBtn.classList.toggle('active', isAll);
+    if (presetFirst3Btn) presetFirst3Btn.classList.toggle('active', isFirst3);
+    if (presetUnit1Btn) presetUnit1Btn.classList.toggle('active', isSingleUnit1);
+
+    if (landingQuickAll) landingQuickAll.classList.toggle('active', isAll);
+    if (landingQuickCustom) landingQuickCustom.classList.toggle('active', !isAll);
+
+    const totalWords = getSelectedWords().length;
+    let summaryText = "";
+    let chipText = "";
+
+    if (isAll) {
+        summaryText = t('allUnitsSelectedSummary', totalWords);
+        chipText = t('allUnitsMixed');
+        if (floatingUnitsBadge) floatingUnitsBadge.textContent = "All";
+    } else if (selectedUnitIds.length === 1) {
+        const u = UNITS_DATA.find(x => x.id === selectedUnitIds[0]);
+        const num = u ? u.number : selectedUnitIds[0];
+        summaryText = t('singleUnitSelectedSummary', num, totalWords);
+        chipText = `${t('unitLabel')} ${num}`;
+        if (floatingUnitsBadge) floatingUnitsBadge.textContent = `${num}`;
+    } else {
+        summaryText = t('multiUnitsSelectedSummary', selectedUnitIds.length, totalWords);
+        chipText = `${selectedUnitIds.join(', ')}. ${t('unitsBtn')} (${t('mixAllMode').replace('🎲 ', '')})`;
+        if (floatingUnitsBadge) floatingUnitsBadge.textContent = `${selectedUnitIds.length}`;
+    }
+
+    if (unitsStatusText) unitsStatusText.textContent = summaryText;
+    if (sidebarActiveSummary) sidebarActiveSummary.textContent = summaryText;
+    if (gameUnitChipText) gameUnitChipText.textContent = chipText;
+
+    // 1. Landing Grid Render
+    if (landingUnitsGrid) {
+        landingUnitsGrid.innerHTML = '';
+        UNITS_DATA.forEach(unit => {
+            const isSelected = selectedUnitIds.includes(unit.id);
+            const unitCard = document.createElement('div');
+            unitCard.className = `landing-unit-item ${isSelected ? 'selected' : ''}`;
+            const unitName = (currentLang === 'tr' ? unit.nameTr : unit.nameEn);
+            const wordListSample = unit.words.map(w => w.word).join(', ');
+
+            unitCard.innerHTML = `
+                <div class="unit-check-circle">${isSelected ? '✓' : ''}</div>
+                <div class="unit-item-icon">${unit.icon}</div>
+                <div class="unit-item-info">
+                    <span class="unit-number-tag">${unitName}</span>
+                    <strong class="unit-item-name">${wordListSample}</strong>
+                    <span class="unit-word-count">${unit.words.length} ${t('wordsCountSuffix')}</span>
+                </div>
+                <button type="button" class="unit-only-pill" title="${t('onlyThisBtn')}">${t('onlyThisBtn')}</button>
+            `;
+
+            unitCard.addEventListener('click', (e) => {
+                if (e.target.classList.contains('unit-only-pill')) {
+                    e.stopPropagation();
+                    selectSingleUnit(unit.id);
+                } else {
+                    toggleUnit(unit.id);
+                }
+            });
+
+            landingUnitsGrid.appendChild(unitCard);
+        });
+    }
+
+    // 2. Sidebar List Render
+    if (sidebarUnitsList) {
+        sidebarUnitsList.innerHTML = '';
+        UNITS_DATA.forEach(unit => {
+            const isSelected = selectedUnitIds.includes(unit.id);
+            const row = document.createElement('div');
+            row.className = `sidebar-unit-row ${isSelected ? 'active' : ''}`;
+            const unitName = (currentLang === 'tr' ? unit.nameTr : unit.nameEn);
+            const wordListSample = unit.words.map(w => w.word).join(', ');
+
+            row.innerHTML = `
+                <label class="unit-row-toggle">
+                    <input type="checkbox" class="unit-checkbox" ${isSelected ? 'checked' : ''} />
+                    <span class="custom-check-box"></span>
+                </label>
+                <div class="unit-row-icon">${unit.icon}</div>
+                <div class="unit-row-details">
+                    <div class="unit-row-title-line">
+                        <span class="unit-pill-tag">${unitName}</span>
+                    </div>
+                    <span class="unit-row-sub">${wordListSample}</span>
+                </div>
+                <button type="button" class="unit-single-select-btn" title="${t('onlyThisBtn')}">🎯</button>
+            `;
+
+            const chk = row.querySelector('.unit-checkbox');
+            chk.addEventListener('change', (e) => {
+                e.stopPropagation();
+                toggleUnit(unit.id);
+            });
+
+            row.querySelector('.unit-single-select-btn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                selectSingleUnit(unit.id);
+            });
+
+            row.addEventListener('click', (e) => {
+                if (e.target.tagName !== 'INPUT' && !e.target.classList.contains('unit-single-select-btn')) {
+                    toggleUnit(unit.id);
+                }
+            });
+
+            sidebarUnitsList.appendChild(row);
+        });
+    }
+}
 
 // --- SES EFEKTLERİ (WEB AUDIO API) ---
 let audioCtx = null;
@@ -673,12 +1054,7 @@ function startGame() {
     selectedPlayer = null;
     currentWordIndex = -1;
 
-    activeWords = [];
-    unit1Words.forEach(item => {
-        activeWords.push({ ...item });
-        activeWords.push({ ...item });
-    });
-    activeWords = shuffleArray(activeWords);
+    rebuildActiveWords();
 
     updateScoreBoard();
     initWheel();
@@ -843,6 +1219,9 @@ function stopRotateWheel() {
 
 // --- BAAMBOOZLE SORU VE ŞIKLARI YÜKLEME ---
 function loadNextWord() {
+    if (activeWords.length === 0) {
+        rebuildActiveWords();
+    }
     if (activeWords.length === 0) return;
 
     currentWordIndex = (currentWordIndex + 1) % activeWords.length;
@@ -852,6 +1231,13 @@ function loadNextWord() {
 
     questionPlaceholder.classList.add('hidden');
     questionImageBox.classList.remove('hidden');
+
+    // Update unit badge above question
+    if (questionUnitBadge) {
+        const uNum = wordData.unitNumber || 1;
+        questionUnitBadge.innerHTML = `<span class="unit-badge-emoji">${wordData.unitIcon || '🏷️'}</span> <span>${t('questionUnitTag', uNum)}</span>`;
+        questionUnitBadge.classList.remove('hidden');
+    }
 
     wordImage.onerror = function () {
         console.warn("Image load error:", wordData.img);
@@ -865,11 +1251,20 @@ function loadNextWord() {
     skipWordBtn.classList.remove('hidden');
 
     // 3 Options (1 Correct + 2 Distractors)
-    const distractors = unit1Words
+    const activeWordPool = activeWords.length >= 3 ? activeWords : getAllWords();
+    let distractors = activeWordPool
         .filter(item => item.word !== currentQuestionWord)
         .map(item => item.word);
 
-    const shuffledDistractors = shuffleArray(distractors).slice(0, 2);
+    let uniqueDistractors = Array.from(new Set(distractors));
+    if (uniqueDistractors.length < 2) {
+        const allGlobalWords = getAllWords()
+            .filter(item => item.word !== currentQuestionWord)
+            .map(item => item.word);
+        uniqueDistractors = Array.from(new Set([...uniqueDistractors, ...allGlobalWords]));
+    }
+
+    const shuffledDistractors = shuffleArray(uniqueDistractors).slice(0, 2);
     const options = shuffleArray([currentQuestionWord, ...shuffledDistractors]);
 
     choicesContainer.innerHTML = '';
@@ -971,6 +1366,10 @@ function resetQuestionAreaForSpin() {
     spinBtn.disabled = false;
     spinBtn.textContent = t('spinBtn');
 
+    if (questionUnitBadge) {
+        questionUnitBadge.classList.add('hidden');
+    }
+
     const nextTeamName = groupNames[currentGroupIndex];
     playerNameSpan.innerHTML = `<span style="color:var(--primary-color)">${t('teamSpinPrompt', nextTeamName)}</span>`;
 }
@@ -1024,6 +1423,9 @@ function endGame() {
     feedbackMessage.classList.add('hidden');
     nextTurnBtn.classList.add('hidden');
     skipWordBtn.classList.add('hidden');
+    if (questionUnitBadge) {
+        questionUnitBadge.classList.add('hidden');
+    }
 
     launchConfetti();
     setTimeout(launchConfetti, 1000);
@@ -1086,5 +1488,6 @@ window.addEventListener('DOMContentLoaded', () => {
     } catch (e) { }
 
     setupLanguageDropdowns();
+    initUnitsSystem();
     setLanguage(savedLang);
 });
