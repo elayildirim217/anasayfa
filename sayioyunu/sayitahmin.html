@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=2.1">
+    <link rel="stylesheet" href="style.css?v=2.3">
 </head>
 
 <body>
@@ -67,7 +67,7 @@
         <p>1 ile 100 arasında bir sayı tuttum.</p>
 
         <div class="game-area">
-            <input type="number" id="guess-input" placeholder="Tahmin..." min="1" max="100">
+            <input type="text" id="guess-input" placeholder="Tahmin..." inputmode="numeric" autocomplete="off">
             <button id="guess-btn" class="btn primary">Tahmin Et</button>
         </div>
 
@@ -76,7 +76,15 @@
         <button id="next-round-btn" class="btn secondary hidden">Sıradaki Kişi</button>
     </div>
 
-    <script src="script.js?v=2.2"></script>
+    <!-- Secret Reveal Badge (Ela yazınca 2 saniye görünen sayı) -->
+    <div id="secret-reveal-badge" class="secret-reveal-badge hidden">
+        <span class="secret-sparkle">✨</span>
+        <span>Aklımdaki Sayı:</span>
+        <strong id="secret-target-val" class="secret-target-val">?</strong>
+        <span class="secret-sparkle">✨</span>
+    </div>
+
+    <script src="script.js?v=2.3"></script>
 </body>
 
 </html>

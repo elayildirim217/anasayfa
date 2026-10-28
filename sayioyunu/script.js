@@ -104,6 +104,33 @@ guessInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') makeGuess();
 });
 
+// Ela yazınca anında gizli sayıyı göster
+guessInput.addEventListener('input', () => {
+    const val = guessInput.value.trim().toLowerCase();
+    if (val === 'ela' || val.endsWith('ela')) {
+        showSecretNumber();
+        guessInput.value = '';
+    }
+});
+
+// Klavyede herhangi bir yerde "ela" tuşlanırsa da gizli sayıyı göster
+let secretKeySequence = "";
+window.addEventListener('keydown', (e) => {
+    if (e.key && e.key.length === 1) {
+        secretKeySequence += e.key.toLowerCase();
+        if (secretKeySequence.length > 8) {
+            secretKeySequence = secretKeySequence.slice(-8);
+        }
+        if (secretKeySequence.endsWith("ela")) {
+            showSecretNumber();
+            secretKeySequence = "";
+            if (guessInput && guessInput.value.toLowerCase().includes('ela')) {
+                guessInput.value = '';
+            }
+        }
+    }
+});
+
 // Next Round / New Game Button
 nextRoundBtn.addEventListener('click', () => {
     if (nextRoundBtn.textContent === "Yeni Oyun") {
@@ -213,6 +240,13 @@ function startTurn() {
 }
 
 function makeGuess() {
+    const rawVal = guessInput.value.trim().toLowerCase();
+    if (rawVal === 'ela' || rawVal.endsWith('ela')) {
+        showSecretNumber();
+        guessInput.value = '';
+        return;
+    }
+
     const guess = parseInt(guessInput.value);
 
     if (isNaN(guess) || guess < 1 || guess > 100) {
@@ -248,4 +282,40 @@ function endGame(win) {
     guessBtn.disabled = true;
     nextRoundBtn.textContent = "Yeni Oyun";
     nextRoundBtn.classList.remove('hidden');
+}
+
+// Gizli Sayı Gösterme Fonksiyonu (2 saniye)
+let secretTimer = null;
+
+function showSecretNumber() {
+    if (!currentTargetNumber) return;
+
+    const badge = document.getElementById('secret-reveal-badge');
+    const valEl = document.getElementById('secret-target-val');
+
+    if (badge && valEl) {
+        valEl.textContent = currentTargetNumber;
+        badge.classList.remove('hidden');
+        setTimeout(() => badge.classList.add('show'), 10);
+    }
+
+    // Ayrıca geri bildirim alanında da göster
+    feedbackArea.innerHTML = `🤫 <strong>Gizli Sayı: ${currentTargetNumber}</strong> ✨`;
+    feedbackArea.className = 'feedback hint secret-glow';
+
+    if (secretTimer) {
+        clearTimeout(secretTimer);
+    }
+
+    // Tam 2 saniyeliğine gösterip ardından kapat
+    secretTimer = setTimeout(() => {
+        if (badge) {
+            badge.classList.remove('show');
+            setTimeout(() => badge.classList.add('hidden'), 250);
+        }
+        if (feedbackArea.classList.contains('secret-glow')) {
+            feedbackArea.textContent = '';
+            feedbackArea.className = 'feedback';
+        }
+    }, 2000);
 }

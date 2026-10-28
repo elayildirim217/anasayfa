@@ -343,3 +343,61 @@ input:focus {
 .hidden {
     display: none !important;
 }
+
+/* Secret Reveal Easter Egg ("ela") */
+.secret-reveal-badge {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    background: linear-gradient(135deg, #FF6584, #FF8E53);
+    color: #FFFFFF;
+    padding: 18px 36px;
+    border-radius: 28px;
+    box-shadow: 0 16px 40px rgba(255, 101, 132, 0.45), 0 0 0 6px rgba(255, 255, 255, 0.4);
+    font-size: 1.8rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.secret-reveal-badge.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    pointer-events: auto;
+}
+
+.secret-target-val {
+    font-size: 2.5rem;
+    color: #FFF9A6;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    background: rgba(0, 0, 0, 0.15);
+    padding: 2px 16px;
+    border-radius: 16px;
+}
+
+.secret-sparkle {
+    font-size: 2rem;
+    animation: sparkleSpin 1.5s infinite linear;
+}
+
+@keyframes sparkleSpin {
+    0% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.2) rotate(180deg); }
+    100% { transform: scale(1) rotate(360deg); }
+}
+
+.feedback.secret-glow {
+    color: #FF6584 !important;
+    animation: pulseSecret 0.5s infinite alternate;
+}
+
+@keyframes pulseSecret {
+    from { transform: scale(1); }
+    to { transform: scale(1.06); }
+}
