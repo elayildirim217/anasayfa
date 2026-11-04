@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Word Wheel - English Vocabulary Game</title>
     <!-- Cache-busting version query string -->
-    <link rel="stylesheet" href="style.css?v=3.3">
+    <link rel="stylesheet" href="style.css?v=3.8">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 
@@ -44,11 +44,14 @@
                 <button type="button" class="preset-btn active" id="preset-all-btn">
                     <span>🎲</span> <span id="preset-all-label">Mix All Units</span>
                 </button>
-                <button type="button" class="preset-btn" id="preset-first3-btn">
-                    <span>🎯</span> <span id="preset-first3-label">Units 1 & 2</span>
+                <button type="button" class="preset-btn" id="preset-unit4-btn">
+                    <span>🔤</span> <span id="preset-unit4-label">Scramble (Unit 4)</span>
                 </button>
-                <button type="button" class="preset-btn" id="preset-unit1-btn">
-                    <span>🏙️</span> <span id="preset-unit1-label">Unit 1 Only</span>
+                <button type="button" class="preset-btn" id="preset-first3-btn">
+                    <span>🏙️</span> <span id="preset-first3-label">Units 1-3 (Images)</span>
+                </button>
+                <button type="button" class="preset-btn" id="sidebar-add-word-btn">
+                    <span>➕</span> <span id="sidebar-add-word-label">Add Words</span>
                 </button>
             </div>
 
@@ -95,7 +98,10 @@
 
             <div id="fun-title" class="colorful-title"></div>
 
-            <button id="generate-groups-btn" class="primary-btn">Create Groups</button>
+            <div class="landing-actions-bar">
+                <button id="generate-groups-btn" class="primary-btn">Create Groups</button>
+                <button type="button" id="open-custom-words-btn" class="secondary-btn">➕ Add Words</button>
+            </div>
             <div id="groups-container" class="groups-grid hidden"></div>
 
             <!-- Unit Selection Card on Landing Page -->
@@ -129,7 +135,8 @@
                 <div class="top-nav-bar game-header-bar">
                     <a href="../oyunlar.html" class="nav-back-btn" id="nav-back-game">⬅️ Games Menu</a>
                     <div class="header-center-group">
-                        <div class="round-badge" id="round-display">Round 1 / 4</div>
+                        <div class="round-badge" id="round-display">Round 1 / 6</div>
+                        <div class="remaining-badge" id="remaining-students-display" title="Remaining Students">👥 Remaining: 24</div>
                         <button type="button" class="game-unit-chip" id="game-unit-chip" title="Unit Selection">
                             <span>📚</span>
                             <span id="game-unit-chip-text">All Units (Mix)</span>
@@ -200,7 +207,7 @@
                         <span id="player-name" class="player-highlight">Spin the Wheel!</span>
                     </div>
 
-                    <!-- Question Card (Image Display) -->
+                    <!-- Question Card (Image or Scramble Display) -->
                     <div class="question-card" id="question-card">
                         <div id="question-unit-badge" class="question-unit-badge hidden">🏙️ Unit 1</div>
                         <div id="question-placeholder" class="question-placeholder">
@@ -210,14 +217,56 @@
                         <div id="question-image-box" class="question-image-box hidden">
                             <img id="word-image" src="" alt="Word Image">
                         </div>
+                        <!-- Scramble Word Card Header -->
+                        <div id="question-scramble-box" class="question-scramble-box hidden">
+                            <div class="scramble-card-top-row">
+                                <span class="scramble-icon">🔤</span>
+                                <span class="scramble-mode-badge" id="scramble-mode-badge">Letter Matching</span>
+                            </div>
+                            <div class="scramble-card-title" id="scramble-header-title">Unscramble the Letters</div>
+                            <div class="scramble-meaning-banner hidden" id="scramble-meaning-banner">
+                                <span class="meaning-icon">💡</span>
+                                <span class="meaning-text" id="scramble-meaning-text"></span>
+                            </div>
+                            <div class="scramble-length-tag" id="scramble-length-tag"></div>
+                        </div>
                     </div>
 
                     <!-- Feedback message (Correct / Wrong) -->
                     <div id="feedback-message" class="feedback-message hidden"></div>
 
-                    <!-- 3 Choices Buttons (Baamboozle Style - No A, B, C) -->
+                    <!-- 3 Choices Buttons (Baamboozle Style - For Image Questions) -->
                     <div id="choices-container" class="choices-container hidden">
                         <!-- Rendered by JS -->
+                    </div>
+
+                    <!-- Interactive Scramble / Letter Matching Area (For Words without Image) -->
+                    <div id="scramble-interactive-area" class="scramble-interactive-area hidden">
+                        <div class="scramble-slots-wrapper" id="scramble-slots-wrapper">
+                            <!-- Slots rendered by JS -->
+                        </div>
+
+                        <div class="scramble-actions" id="scramble-actions">
+                            <button type="button" class="scramble-action-btn" id="scramble-backspace-btn" title="Delete (Backspace)">
+                                ⌫ <span class="act-label" id="lbl-backspace">Delete</span>
+                            </button>
+                            <button type="button" class="scramble-action-btn" id="scramble-clear-btn" title="Reset">
+                                🔄 <span class="act-label" id="lbl-clear">Reset</span>
+                            </button>
+                            <button type="button" class="scramble-action-btn" id="scramble-hint-btn" title="Hint">
+                                💡 <span class="act-label" id="lbl-hint">Hint</span>
+                            </button>
+                            <button type="button" class="scramble-action-btn check-action" id="scramble-check-btn" title="Check Word">
+                                ✓ <span class="act-label" id="lbl-check">Check</span>
+                            </button>
+                            <button type="button" class="scramble-action-btn reveal-action hidden" id="scramble-reveal-btn" title="Reveal Answer">
+                                👁️ <span class="act-label" id="lbl-reveal">Reveal</span>
+                            </button>
+                        </div>
+
+                        <div class="scramble-tiles-pool" id="scramble-tiles-pool">
+                            <!-- Scrambled letter tiles rendered by JS -->
+                        </div>
                     </div>
 
                     <!-- Game Controls -->
@@ -230,8 +279,61 @@
         </section>
     </div>
 
+    <!-- Custom Words Modal (Kelime Ekle & Yönet) -->
+    <div id="custom-words-modal" class="custom-words-modal hidden" aria-modal="true" role="dialog">
+        <div class="modal-backdrop" id="modal-backdrop"></div>
+        <div class="modal-container">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <span class="modal-emoji">✏️</span>
+                    <div>
+                        <h3 id="custom-modal-title">Add & Manage Words</h3>
+                        <span class="modal-subtitle" id="custom-modal-subtitle">Add your own words for the letter matching game</span>
+                    </div>
+                </div>
+                <button type="button" id="close-custom-modal" class="sidebar-close-btn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-word-form" class="custom-word-form">
+                    <div class="form-row">
+                        <div class="form-group flex-2">
+                            <label for="custom-word-input" id="lbl-custom-word">English Word:</label>
+                            <input type="text" id="custom-word-input" placeholder="e.g. holiday, challenge, freedom..." autocomplete="off" required>
+                        </div>
+                        <div class="form-group flex-2">
+                            <label for="custom-meaning-input" id="lbl-custom-meaning">English Clue / Meaning (Optional):</label>
+                            <input type="text" id="custom-meaning-input" placeholder="e.g. Workplace, vacation, sports arena..." autocomplete="off">
+                        </div>
+                        <div class="form-group form-btn-group">
+                            <button type="submit" id="save-custom-word-btn" class="primary-btn add-btn">➕ Add Word</button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="bulk-add-toggle-row">
+                    <button type="button" id="toggle-bulk-add" class="text-link-btn">📋 Bulk Add Words (Comma Separated)</button>
+                </div>
+                <div id="bulk-add-container" class="bulk-add-container hidden">
+                    <textarea id="bulk-words-input" placeholder="Type words separated by commas (e.g. pen, pencil, notebook, eraser)"></textarea>
+                    <button type="button" id="save-bulk-words-btn" class="primary-btn small-btn">Add All</button>
+                </div>
+
+                <div class="custom-words-list-header">
+                    <h4 id="custom-list-heading">Added Custom Words (<span id="custom-words-count">0</span>)</h4>
+                    <button type="button" id="clear-all-custom-btn" class="danger-link-btn hidden">Clear All</button>
+                </div>
+                <div class="custom-words-list" id="custom-words-list">
+                    <div class="empty-custom-words" id="empty-custom-words">No custom words yet. Add some using the form above!</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="close-modal-done-btn" class="primary-btn">Done & Close</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Script with cache busting -->
-    <script src="script.js?v=3.3"></script>
+    <script src="script.js?v=3.8"></script>
 </body>
 
 </html>

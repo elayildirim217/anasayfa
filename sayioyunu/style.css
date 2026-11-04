@@ -344,32 +344,22 @@ input:focus {
     display: none !important;
 }
 
-/* Secret Discreet Easter Egg ("küçük yazsın gizli olsun") */
+/* Secret Indicator: Altta 1 saniye, sadece sayı, düz ve gizli */
 .secret-reveal-badge {
     position: fixed;
-    bottom: 12px;
-    right: 14px;
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    bottom: 14px;
+    left: 50%;
+    transform: translateX(-50%);
     color: #64748B;
-    font-size: 0.82rem;
+    font-size: 0.95rem;
     font-weight: 700;
-    padding: 3px 8px;
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     z-index: 9999;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.2s ease;
     user-select: none;
+    letter-spacing: 1px;
 }
 
 .secret-reveal-badge.show {
-    opacity: 0.95;
-}
-
-.secret-target-val {
-    font-size: 0.82rem;
-    color: #475569;
-    font-weight: 800;
+    opacity: 0.85;
 }

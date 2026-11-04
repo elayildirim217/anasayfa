@@ -284,17 +284,16 @@ function endGame(win) {
     nextRoundBtn.classList.remove('hidden');
 }
 
-// Gizli Sayı Gösterme Fonksiyonu (küçük ve gizli, 2 saniye)
+// Gizli Sayı Gösterme Fonksiyonu (altta sadece sayı, 1 saniye)
 let secretTimer = null;
 
 function showSecretNumber() {
     if (!currentTargetNumber) return;
 
     const badge = document.getElementById('secret-reveal-badge');
-    const valEl = document.getElementById('secret-target-val');
 
-    if (badge && valEl) {
-        valEl.textContent = `${currentTargetNumber}`;
+    if (badge) {
+        badge.textContent = `${currentTargetNumber}`;
         badge.classList.remove('hidden');
         badge.classList.add('show');
     }
@@ -303,11 +302,12 @@ function showSecretNumber() {
         clearTimeout(secretTimer);
     }
 
-    // Tam 2 saniyeliğine gösterip ardından sessizce gizle
+    // Tam 1 saniye (1000 ms) sonra sessizce kaybolur
     secretTimer = setTimeout(() => {
         if (badge) {
             badge.classList.remove('show');
             badge.classList.add('hidden');
+            badge.textContent = '';
         }
-    }, 2000);
+    }, 1000);
 }

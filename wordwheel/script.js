@@ -7,8 +7,7 @@
 const boys = ["Arel", "Eren", "Mahir", "Çınar", "Ege", "Arda", "Mustafa", "Yiğit", "Ali", "Giray", "Ertuğrul", "Ömer", "Mehmet"];
 const girls = ["Ela", "Feraye", "Pelin", "Seray", "Hira", "Elif Ada", "Naz", "Derin", "Deniz", "Gülnihal", "İman"];
 
-// --- 3 ÜNİTE VE KELİME VERİLERİ (UNITS DATA) ---
-// SADECE KULLANICININ BELİRTTİĞİ 18 KELİME VE GÖRSELLER (3 ÜNİTE)
+// --- 4 ÜNİTE VE KELİME VERİLERİ (UNITS DATA) ---
 const UNITS_DATA = [
     {
         id: 1,
@@ -54,11 +53,80 @@ const UNITS_DATA = [
             { word: "Instructor", img: "images/Instructor.png" },
             { word: "Biking", img: "images/biking.png" }
         ]
+    },
+    {
+        id: 4,
+        number: 4,
+        nameEn: "Unit 4 (Word Scramble)",
+        nameTr: "4. Ünite (Word Scramble)",
+        icon: "🔤",
+        words: [
+            { word: "office", clue: "Workplace with desks and computers", isScramble: true },
+            { word: "visit", clue: "To go to see a person or a place", isScramble: true },
+            { word: "amazing", clue: "Extremely good, wonderful, surprising", isScramble: true },
+            { word: "arrive", clue: "To reach a destination or place", isScramble: true },
+            { word: "far", clue: "A long distance away, not near", isScramble: true },
+            { word: "stadium", clue: "A large sports arena with spectator seats", isScramble: true },
+            { word: "job", clue: "Work that you do regularly for pay", isScramble: true },
+            { word: "leave", clue: "To go away or depart from a place", isScramble: true },
+            { word: "stay", clue: "To continue to be in the same place", isScramble: true },
+            { word: "miss", clue: "To feel sad because someone is not there", isScramble: true },
+            { word: "easy", clue: "Simple to do, not difficult", isScramble: true },
+            { word: "flood", clue: "An overflow of water covering dry land", isScramble: true },
+            { word: "exercise", clue: "Physical activity to stay fit and healthy", isScramble: true },
+            { word: "get fit", clue: "To become physically healthy and strong", isScramble: true },
+            { word: "creative", clue: "Having good imagination and original ideas", isScramble: true },
+            { word: "join club", clue: "To become a member of an activity group", isScramble: true },
+            { word: "photography", clue: "The art or hobby of taking photographs", isScramble: true },
+            { word: "international", clue: "Involving two or more countries or nations", isScramble: true },
+            { word: "match", clue: "A sports competition, game, or contest", isScramble: true },
+            { word: "against", clue: "In competition with or opposed to", isScramble: true },
+            { word: "win", clue: "To achieve victory or be first in a game", isScramble: true },
+            { word: "future", clue: "The time that is to come after the present", isScramble: true },
+            { word: "goal", clue: "An aim, target, or point scored in a game", isScramble: true }
+        ]
     }
 ];
 
+// --- ÖZEL KELİME YÖNETİMİ (CUSTOM WORDS) ---
+function getCustomWords() {
+    try {
+        const val = localStorage.getItem('wordwheel_custom_words');
+        return val ? JSON.parse(val) : [];
+    } catch (e) {
+        return [];
+    }
+}
+
+function saveCustomWords(arr) {
+    try {
+        localStorage.setItem('wordwheel_custom_words', JSON.stringify(arr));
+    } catch (e) { }
+}
+
+function getEffectiveUnits() {
+    const list = [...UNITS_DATA];
+    const customWords = getCustomWords();
+    if (customWords.length > 0) {
+        list.push({
+            id: 5,
+            number: 5,
+            nameEn: "Custom Words",
+            nameTr: "Custom Words",
+            icon: "⭐",
+            words: customWords.map(w => ({
+                word: w.word,
+                clue: w.clue || w.tr || "",
+                isScramble: !w.img,
+                img: w.img || null
+            }))
+        });
+    }
+    return list;
+}
+
 function getAllWords() {
-    return UNITS_DATA.flatMap(u => u.words.map(w => ({
+    return getEffectiveUnits().flatMap(u => u.words.map(w => ({
         ...w,
         unitId: u.id,
         unitNumber: u.number,
@@ -95,7 +163,8 @@ const i18n = {
         unitsSidebarTitle: "Unit Selection",
         unitsSidebarDesc: "Select one unit or choose multiple units to practice them in mixed mode!",
         presetAllUnits: "Mix All Units",
-        presetFirst3Units: "Units 1 & 2",
+        presetFirst3Units: "Units 1-3 (Images)",
+        presetUnit4Only: "Unit 4 (Scramble)",
         presetUnit1Only: "Unit 1 Only",
         doneApplyBtn: "Done & Apply",
         landingUnitsHeading: "Choose Units to Play",
@@ -104,12 +173,26 @@ const i18n = {
         unitLabel: "Unit",
         wordsCountSuffix: "words",
         onlyThisBtn: "Only this",
-        allUnitsSelectedSummary: (words) => `All 3 units selected (${words} words • Mixed Mode)`,
+        allUnitsSelectedSummary: (words) => `All units selected (${words} words • Mixed Mode)`,
         allUnitsMixed: "All Units (Mix)",
         multiUnitsSelectedSummary: (units, words) => `${units} units selected (${words} words • Mixed Mode)`,
         singleUnitSelectedSummary: (unitNum, words) => `Unit ${unitNum} selected (${words} words • Single Mode)`,
         unitActiveChip: (count, isMix) => isMix ? `Mix (${count} Units)` : `Unit ${count}`,
-        questionUnitTag: (num) => `Unit ${num}`
+        questionUnitTag: (num) => `Unit ${num}`,
+        scrambleHeaderTitle: "Unscramble the Letters!",
+        scrambleModeBadge: "Letter Matching",
+        scrambleMeaningLabel: "Clue:",
+        scrambleLength: (chars, words) => words > 1 ? `${words} Words • ${chars} Letters` : `${chars} Letters`,
+        scrambleCorrect: (w) => `🎉 Awesome! Correct word: <strong>${w}</strong> (+10 Points)`,
+        scrambleWrong: "❌ Not quite right! Rearrange the letters or use Hint 💡",
+        scrambleRevealed: (w) => `💡 Answer revealed: <strong>${w}</strong>`,
+        remainingStudentsBadge: (count) => `👥 Remaining: ${count}`,
+        lblBackspace: "Delete",
+        lblClear: "Reset",
+        lblHint: "Hint",
+        lblCheck: "Check",
+        lblReveal: "Show Answer",
+        emptyCustomWords: "No custom words yet. Add some using the form above!"
     },
     tr: {
         pageTitle: "Word Wheel - İngilizce Kelime Oyunu",
@@ -136,7 +219,8 @@ const i18n = {
         unitsSidebarTitle: "Ünite Seçimi",
         unitsSidebarDesc: "İster tek bir ünite seçin, ister birden fazla ünite seçerek karışık oynayın!",
         presetAllUnits: "Tüm Üniteler (Karışık)",
-        presetFirst3Units: "1 ve 2. Üniteler",
+        presetFirst3Units: "1-3. Üniteler (Görselli)",
+        presetUnit4Only: "4. Ünite (Harf Eşleştirme)",
         presetUnit1Only: "Sadece 1. Ünite",
         doneApplyBtn: "Tamam & Uygula",
         landingUnitsHeading: "Oynanacak Üniteleri Seçin",
@@ -145,12 +229,26 @@ const i18n = {
         unitLabel: "Ünite",
         wordsCountSuffix: "kelime",
         onlyThisBtn: "Sadece bu",
-        allUnitsSelectedSummary: (words) => `Tüm 3 ünite seçili (${words} kelime • Karışık Mod)`,
+        allUnitsSelectedSummary: (words) => `Tüm üniteler seçili (${words} kelime • Karışık Mod)`,
         allUnitsMixed: "Tüm Üniteler (Karışık)",
         multiUnitsSelectedSummary: (units, words) => `${units} ünite seçildi (${words} kelime • Karışık Mod)`,
         singleUnitSelectedSummary: (unitNum, words) => `${unitNum}. Ünite seçildi (${words} kelime • Normal Mod)`,
         unitActiveChip: (count, isMix) => isMix ? `Karışık (${count} Ünite)` : `${count}. Ünite`,
-        questionUnitTag: (num) => `${num}. Ünite`
+        questionUnitTag: (num) => `${num}. Ünite`,
+        scrambleHeaderTitle: "Unscramble the Letters!",
+        scrambleModeBadge: "Letter Matching",
+        scrambleMeaningLabel: "Clue:",
+        scrambleLength: (chars, words) => words > 1 ? `${words} Words • ${chars} Letters` : `${chars} Letters`,
+        scrambleCorrect: (w) => `🎉 Awesome! Correct word: <strong>${w}</strong> (+10 Points)`,
+        scrambleWrong: "❌ Not quite right! Rearrange the letters or use Hint 💡",
+        scrambleRevealed: (w) => `💡 Answer revealed: <strong>${w}</strong>`,
+        remainingStudentsBadge: (count) => `👥 Remaining: ${count}`,
+        lblBackspace: "Delete",
+        lblClear: "Reset",
+        lblHint: "Hint",
+        lblCheck: "Check",
+        lblReveal: "Reveal",
+        emptyCustomWords: "No custom words yet. Add some using the form above!"
     },
     es: {
         pageTitle: "Word Wheel - Juego de Vocabulario en Inglés",
@@ -490,6 +588,30 @@ function setLanguage(lang) {
     const landingQuickCustom = document.getElementById('landing-quick-custom');
     if (landingQuickCustom) landingQuickCustom.textContent = t('customMode');
 
+    // Action Buttons (English-only)
+    const lblBackspace = document.getElementById('lbl-backspace');
+    if (lblBackspace) lblBackspace.textContent = "Delete";
+
+    const lblClear = document.getElementById('lbl-clear');
+    if (lblClear) lblClear.textContent = "Reset";
+
+    const lblHint = document.getElementById('lbl-hint');
+    if (lblHint) lblHint.textContent = "Hint";
+
+    const lblCheck = document.getElementById('lbl-check');
+    if (lblCheck) lblCheck.textContent = "Check";
+
+    const lblReveal = document.getElementById('lbl-reveal');
+    if (lblReveal) lblReveal.textContent = "Reveal";
+
+    const openCustomWordsBtnEl = document.getElementById('open-custom-words-btn');
+    if (openCustomWordsBtnEl) openCustomWordsBtnEl.textContent = "➕ Add Words";
+
+    const sidebarAddWordLabel = document.getElementById('sidebar-add-word-label');
+    if (sidebarAddWordLabel) sidebarAddWordLabel.textContent = "Add Words";
+
+    updateRemainingBadge();
+
     // Scoreboard & dynamic labels
     updateScoreBoard();
     if (!selectedPlayer && !isSpinning) {
@@ -547,17 +669,26 @@ const groupNames = ["Stars", "Hearts", "Shine", "Clouds"];
 
 // State
 let allStudents = [];
+let totalStudentsCount = 24;
+let turnsPlayed = 0;
 let currentRotation = 0;
 let isSpinning = false;
 let currentWordIndex = -1;
 let currentQuestionWord = null;
 let isQuestionAnswered = false;
 let groupScores = [0, 0, 0, 0];
-let groupPlayerIndices = [0, 0, 0, 0];
 let currentGroupIndex = 0;
 let selectedPlayer = null;
 let currentRound = 0;
-const MAX_ROUNDS = 4;
+let MAX_ROUNDS = 6;
+
+// Scramble Game State
+let currentScrambleTarget = "";
+let currentScrambleClean = "";
+let scrambleLetterPool = [];
+let placedSlots = [];
+let wordSegments = [];
+let wrongAttempts = 0;
 
 // DOM Elements
 const landingPage = document.getElementById('landing-page');
@@ -569,19 +700,31 @@ const wheelCanvas = document.getElementById('wheel-canvas');
 const spinBtn = document.getElementById('spin-btn');
 const playerNameSpan = document.getElementById('player-name');
 const roundDisplay = document.getElementById('round-display');
+const remainingStudentsDisplay = document.getElementById('remaining-students-display');
 
 // Question Area Elements
 const questionPlaceholder = document.getElementById('question-placeholder');
 const questionImageBox = document.getElementById('question-image-box');
 const wordImage = document.getElementById('word-image');
+const questionScrambleBox = document.getElementById('question-scramble-box');
+const scrambleInteractiveArea = document.getElementById('scramble-interactive-area');
+const scrambleSlotsWrapper = document.getElementById('scramble-slots-wrapper');
+const scrambleTilesPool = document.getElementById('scramble-tiles-pool');
 const choicesContainer = document.getElementById('choices-container');
 const feedbackMessage = document.getElementById('feedback-message');
 const nextTurnBtn = document.getElementById('next-turn-btn');
 const skipWordBtn = document.getElementById('skip-word-btn');
 const questionUnitBadge = document.getElementById('question-unit-badge');
 
+// Scramble Action Buttons
+const scrambleBackspaceBtn = document.getElementById('scramble-backspace-btn');
+const scrambleClearBtn = document.getElementById('scramble-clear-btn');
+const scrambleHintBtn = document.getElementById('scramble-hint-btn');
+const scrambleCheckBtn = document.getElementById('scramble-check-btn');
+const scrambleRevealBtn = document.getElementById('scramble-reveal-btn');
+
 // Unit Selection DOM Elements
-let selectedUnitIds = UNITS_DATA.map(u => u.id); // Default: all 3 units (Karışık / Mixed) [1, 2, 3]
+let selectedUnitIds = getEffectiveUnits().map(u => u.id); // Default: all units (Karışık / Mixed)
 
 const floatingUnitsBtn = document.getElementById('floating-units-btn');
 const floatingUnitsBadge = document.getElementById('floating-units-badge');
@@ -600,7 +743,10 @@ const unitsStatusText = document.getElementById('units-status-text');
 
 const presetAllBtn = document.getElementById('preset-all-btn');
 const presetFirst3Btn = document.getElementById('preset-first3-btn');
+const presetUnit4Btn = document.getElementById('preset-unit4-btn');
 const presetUnit1Btn = document.getElementById('preset-unit1-btn');
+const sidebarAddWordBtn = document.getElementById('sidebar-add-word-btn');
+const openCustomWordsBtn = document.getElementById('open-custom-words-btn');
 
 const gameUnitChip = document.getElementById('game-unit-chip');
 const gameUnitChipText = document.getElementById('game-unit-chip-text');
@@ -608,11 +754,11 @@ const gameUnitChipText = document.getElementById('game-unit-chip-text');
 let ctx;
 
 // --- EVENT LISTENERS ---
-generateBtn.addEventListener('click', generateGroups);
-startGameBtn.addEventListener('click', startGame);
-spinBtn.addEventListener('click', handleSpinClick);
-nextTurnBtn.addEventListener('click', advanceToNextTurn);
-skipWordBtn.addEventListener('click', loadNextWord);
+if (generateBtn) generateBtn.addEventListener('click', generateGroups);
+if (startGameBtn) startGameBtn.addEventListener('click', startGame);
+if (spinBtn) spinBtn.addEventListener('click', handleSpinClick);
+if (nextTurnBtn) nextTurnBtn.addEventListener('click', advanceToNextTurn);
+if (skipWordBtn) skipWordBtn.addEventListener('click', loadNextWord);
 
 // --- ÜNİTE SİSTEMİ MANTIĞI (UNIT SYSTEM LOGIC) ---
 function initUnitsSystem() {
@@ -624,11 +770,14 @@ function initUnitsSystem() {
 
     if (presetAllBtn) presetAllBtn.addEventListener('click', selectAllUnits);
     if (presetFirst3Btn) presetFirst3Btn.addEventListener('click', selectFirst3Units);
+    if (presetUnit4Btn) presetUnit4Btn.addEventListener('click', selectUnit4Only);
     if (presetUnit1Btn) presetUnit1Btn.addEventListener('click', () => selectSingleUnit(1));
 
     if (landingQuickAll) landingQuickAll.addEventListener('click', selectAllUnits);
     if (landingQuickCustom) landingQuickCustom.addEventListener('click', openUnitsSidebar);
 
+    initCustomWordsModal();
+    initScrambleControls();
     renderUnitsUI();
 }
 
@@ -660,12 +809,17 @@ function toggleUnit(unitId) {
 }
 
 function selectAllUnits() {
-    selectedUnitIds = UNITS_DATA.map(u => u.id);
+    selectedUnitIds = getEffectiveUnits().map(u => u.id);
     onUnitsSelectionChanged();
 }
 
 function selectFirst3Units() {
-    selectedUnitIds = [1, 2];
+    selectedUnitIds = [1, 2, 3];
+    onUnitsSelectionChanged();
+}
+
+function selectUnit4Only() {
+    selectedUnitIds = [4];
     onUnitsSelectionChanged();
 }
 
@@ -682,7 +836,7 @@ function onUnitsSelectionChanged() {
 }
 
 function getSelectedWords() {
-    const selected = UNITS_DATA.filter(u => selectedUnitIds.includes(u.id));
+    const selected = getEffectiveUnits().filter(u => selectedUnitIds.includes(u.id));
     return selected.flatMap(u => u.words.map(w => ({
         ...w,
         unitId: u.id,
@@ -708,12 +862,15 @@ function rebuildActiveWords(keepCurrent = false) {
 }
 
 function renderUnitsUI() {
-    const isAll = selectedUnitIds.length === UNITS_DATA.length;
-    const isUnits12 = selectedUnitIds.length === 2 && [1, 2].every(id => selectedUnitIds.includes(id));
+    const allUnits = getEffectiveUnits();
+    const isAll = allUnits.length > 0 && allUnits.every(u => selectedUnitIds.includes(u.id));
+    const isUnits123 = selectedUnitIds.length === 3 && [1, 2, 3].every(id => selectedUnitIds.includes(id));
+    const isUnit4Only = selectedUnitIds.length === 1 && selectedUnitIds[0] === 4;
     const isSingleUnit1 = selectedUnitIds.length === 1 && selectedUnitIds[0] === 1;
 
     if (presetAllBtn) presetAllBtn.classList.toggle('active', isAll);
-    if (presetFirst3Btn) presetFirst3Btn.classList.toggle('active', isUnits12);
+    if (presetFirst3Btn) presetFirst3Btn.classList.toggle('active', isUnits123);
+    if (presetUnit4Btn) presetUnit4Btn.classList.toggle('active', isUnit4Only);
     if (presetUnit1Btn) presetUnit1Btn.classList.toggle('active', isSingleUnit1);
 
     if (landingQuickAll) landingQuickAll.classList.toggle('active', isAll);
@@ -726,9 +883,9 @@ function renderUnitsUI() {
     if (isAll) {
         summaryText = t('allUnitsSelectedSummary', totalWords);
         chipText = t('allUnitsMixed');
-        if (floatingUnitsBadge) floatingUnitsBadge.textContent = `${UNITS_DATA.length}`;
+        if (floatingUnitsBadge) floatingUnitsBadge.textContent = `${allUnits.length}`;
     } else if (selectedUnitIds.length === 1) {
-        const u = UNITS_DATA.find(x => x.id === selectedUnitIds[0]);
+        const u = allUnits.find(x => x.id === selectedUnitIds[0]);
         const num = u ? u.number : selectedUnitIds[0];
         summaryText = t('singleUnitSelectedSummary', num, totalWords);
         chipText = `${t('unitLabel')} ${num}`;
@@ -746,12 +903,12 @@ function renderUnitsUI() {
     // 1. Landing Grid Render
     if (landingUnitsGrid) {
         landingUnitsGrid.innerHTML = '';
-        UNITS_DATA.forEach(unit => {
+        allUnits.forEach(unit => {
             const isSelected = selectedUnitIds.includes(unit.id);
             const unitCard = document.createElement('div');
             unitCard.className = `landing-unit-item ${isSelected ? 'selected' : ''}`;
             const unitName = (currentLang === 'tr' ? unit.nameTr : unit.nameEn);
-            const wordListSample = unit.words.map(w => w.word).join(', ');
+            const wordListSample = unit.words.map(w => w.word).slice(0, 6).join(', ') + (unit.words.length > 6 ? '...' : '');
 
             unitCard.innerHTML = `
                 <div class="unit-check-circle">${isSelected ? '✓' : ''}</div>
@@ -780,12 +937,12 @@ function renderUnitsUI() {
     // 2. Sidebar List Render
     if (sidebarUnitsList) {
         sidebarUnitsList.innerHTML = '';
-        UNITS_DATA.forEach(unit => {
+        allUnits.forEach(unit => {
             const isSelected = selectedUnitIds.includes(unit.id);
             const row = document.createElement('div');
             row.className = `sidebar-unit-row ${isSelected ? 'active' : ''}`;
             const unitName = (currentLang === 'tr' ? unit.nameTr : unit.nameEn);
-            const wordListSample = unit.words.map(w => w.word).join(', ');
+            const wordListSample = unit.words.map(w => w.word).slice(0, 6).join(', ') + (unit.words.length > 6 ? '...' : '');
 
             row.innerHTML = `
                 <label class="unit-row-toggle">
@@ -803,15 +960,20 @@ function renderUnitsUI() {
             `;
 
             const chk = row.querySelector('.unit-checkbox');
-            chk.addEventListener('change', (e) => {
-                e.stopPropagation();
-                toggleUnit(unit.id);
-            });
+            if (chk) {
+                chk.addEventListener('change', (e) => {
+                    e.stopPropagation();
+                    toggleUnit(unit.id);
+                });
+            }
 
-            row.querySelector('.unit-single-select-btn').addEventListener('click', (e) => {
-                e.stopPropagation();
-                selectSingleUnit(unit.id);
-            });
+            const singleBtn = row.querySelector('.unit-single-select-btn');
+            if (singleBtn) {
+                singleBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    selectSingleUnit(unit.id);
+                });
+            }
 
             row.addEventListener('click', (e) => {
                 if (e.target.tagName !== 'INPUT' && !e.target.classList.contains('unit-single-select-btn')) {
@@ -974,21 +1136,25 @@ function generateGroups() {
     const shuffledGirls = shuffleArray(girls);
     groups = [[], [], [], []];
 
-    shuffledGirls.forEach((girl, i) => groups[i % 4].push({ name: girl, gender: 'Girl' }));
-    shuffledBoys.forEach((boy, i) => groups[i % 4].push({ name: boy, gender: 'Boy' }));
+    shuffledGirls.forEach((girl, i) => groups[i % 4].push({ name: girl, gender: 'Girl', played: false }));
+    shuffledBoys.forEach((boy, i) => groups[i % 4].push({ name: boy, gender: 'Boy', played: false }));
 
     allStudents = groups.flat().map(s => s.name);
+    totalStudentsCount = allStudents.length;
+    turnsPlayed = 0;
+
     displayGroups();
-    startGameBtn.classList.remove('hidden');
+    if (startGameBtn) startGameBtn.classList.remove('hidden');
 }
 
 function displayGroups() {
+    if (!groupsContainer) return;
     groupsContainer.innerHTML = '';
     groupsContainer.classList.remove('hidden');
     groups.forEach((group, index) => {
         const card = document.createElement('div');
         card.className = 'group-card';
-        card.innerHTML = `<h3>${groupNames[index]}</h3><ul>${group.map(s => `<li>👤 ${s.name}</li>`).join('')}</ul>`;
+        card.innerHTML = `<h3>${groupNames[index]}</h3><ul>${group.map(s => `<li>👤 ${s.name}${s.played ? ' <span style="color:#2ECC71; font-weight:800;">✓</span>' : ''}</li>`).join('')}</ul>`;
         groupsContainer.appendChild(card);
     });
 }
@@ -1003,31 +1169,64 @@ function startGame() {
     if (funTitle) funTitle.innerHTML = "";
     if (welcomeTitle) welcomeTitle.innerHTML = "";
 
+    // Reset played state for all students in all groups
+    groups.forEach(group => group.forEach(student => student.played = false));
+    allStudents = groups.flat().map(s => s.name);
+    totalStudentsCount = allStudents.length;
+    turnsPlayed = 0;
+
     groupScores = [0, 0, 0, 0];
-    groupPlayerIndices = [0, 0, 0, 0];
     currentGroupIndex = 0;
     currentRound = 0;
+    MAX_ROUNDS = Math.ceil(totalStudentsCount / 4);
     selectedPlayer = null;
     currentWordIndex = -1;
 
     rebuildActiveWords();
 
     updateScoreBoard();
+    updateRemainingBadge();
     initWheel();
     resetQuestionAreaForSpin();
 }
 
+function updateRemainingBadge() {
+    if (remainingStudentsDisplay) {
+        remainingStudentsDisplay.textContent = `👥 Remaining: ${allStudents.length}`;
+    }
+}
+
 // --- ÇARK ÇİZİMİ ---
 function initWheel() {
-    ctx = wheelCanvas.getContext('2d');
-    drawWheel();
+    if (wheelCanvas) {
+        ctx = wheelCanvas.getContext('2d');
+        drawWheel();
+    }
 }
 
 function drawWheel() {
-    if (!ctx || allStudents.length === 0) return;
+    if (!ctx) return;
+    const radius = wheelCanvas.width / 2;
+
+    if (allStudents.length === 0) {
+        ctx.clearRect(0, 0, wheelCanvas.width, wheelCanvas.height);
+        ctx.save();
+        ctx.translate(radius, radius);
+        ctx.beginPath();
+        ctx.arc(0, 0, radius - 4, 0, 2 * Math.PI);
+        ctx.fillStyle = '#6C63FF';
+        ctx.fill();
+        ctx.fillStyle = 'white';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.font = 'bold 18px Outfit, sans-serif';
+        ctx.fillText(t('allStudentsPlayedTitle'), 0, 0);
+        ctx.restore();
+        return;
+    }
+
     const numSegments = allStudents.length;
     const arcSize = (2 * Math.PI) / numSegments;
-    const radius = wheelCanvas.width / 2;
 
     ctx.clearRect(0, 0, wheelCanvas.width, wheelCanvas.height);
     ctx.save();
@@ -1053,7 +1252,8 @@ function drawWheel() {
         ctx.rotate(angle + arcSize / 2);
         ctx.textAlign = "right";
         ctx.fillStyle = "white";
-        ctx.font = "bold 13px Outfit, sans-serif";
+        const fontSize = numSegments > 18 ? 12 : (numSegments > 10 ? 14 : 16);
+        ctx.font = `bold ${fontSize}px Outfit, sans-serif`;
         ctx.fillText(student, radius - 15, 5);
         ctx.restore();
     });
@@ -1086,14 +1286,20 @@ function handleSpinClick() {
         alert(t('alertAnswerFirst'));
         return;
     }
-    if (currentRound >= MAX_ROUNDS) return;
+    if (allStudents.length === 0) {
+        endGame();
+        return;
+    }
     if (isSpinning) return;
 
     startGroupTurn();
 }
 
 function startGroupTurn() {
-    if (allStudents.length === 0) return;
+    if (allStudents.length === 0) {
+        endGame();
+        return;
+    }
 
     isSpinning = true;
     spinBtn.disabled = true;
@@ -1101,17 +1307,37 @@ function startGroupTurn() {
     questionPlaceholder.classList.remove('hidden');
     questionImageBox.classList.add('hidden');
     choicesContainer.classList.add('hidden');
+    if (questionScrambleBox) questionScrambleBox.classList.add('hidden');
+    if (scrambleInteractiveArea) scrambleInteractiveArea.classList.add('hidden');
     feedbackMessage.classList.add('hidden');
     nextTurnBtn.classList.add('hidden');
     skipWordBtn.classList.add('hidden');
 
-    // 1. Mevcut takımın sıradaki öğrencisini belirle
-    const group = groups[currentGroupIndex];
-    const playerIndex = groupPlayerIndices[currentGroupIndex] % group.length;
-    selectedPlayer = group[playerIndex].name;
+    // 1. Mevcut takımın henüz oynamamış öğrencisini belirle
+    let group = groups[currentGroupIndex];
+    let unplayed = group.filter(p => !p.played);
+
+    // Eğer bu takımın tüm öğrencileri oynadıysa sıradaki takıma geç
+    if (unplayed.length === 0) {
+        let attempts = 0;
+        while (unplayed.length === 0 && attempts < 4) {
+            currentGroupIndex = (currentGroupIndex + 1) % 4;
+            group = groups[currentGroupIndex];
+            unplayed = group.filter(p => !p.played);
+            attempts++;
+        }
+    }
+
+    if (unplayed.length > 0) {
+        const nextPlayer = unplayed[Math.floor(Math.random() * unplayed.length)];
+        selectedPlayer = nextPlayer.name;
+    } else {
+        selectedPlayer = allStudents[0];
+    }
 
     // 2. Çarkın tam bu öğrencinin diliminin ortasında durması için açıyı hesapla
-    const targetIndex = allStudents.indexOf(selectedPlayer);
+    let targetIndex = allStudents.indexOf(selectedPlayer);
+    if (targetIndex === -1) targetIndex = 0;
     const numSegments = allStudents.length;
     const arcSize = (2 * Math.PI) / numSegments;
     const pointerAngle = 1.5 * Math.PI; // Tepedeki ok açısı (270°)
@@ -1173,7 +1399,7 @@ function stopRotateWheel() {
     loadNextWord();
 }
 
-// --- BAAMBOOZLE SORU VE ŞIKLARI YÜKLEME ---
+// --- BAAMBOOZLE VE HARF EŞLEŞTİRME SORULARI YÜKLEME ---
 function loadNextWord() {
     if (activeWords.length === 0) {
         rebuildActiveWords();
@@ -1186,61 +1412,104 @@ function loadNextWord() {
     isQuestionAnswered = false;
 
     questionPlaceholder.classList.add('hidden');
-    questionImageBox.classList.remove('hidden');
-
-    // Update unit badge above question
-    if (questionUnitBadge) {
-        const uNum = wordData.unitNumber || 1;
-        questionUnitBadge.innerHTML = `<span class="unit-badge-emoji">${wordData.unitIcon || '🏷️'}</span> <span>${t('questionUnitTag', uNum)}</span>`;
-        questionUnitBadge.classList.remove('hidden');
-    }
-
-    wordImage.onerror = function () {
-        console.warn("Image load error:", wordData.img);
-        const filename = wordData.img.split('/').pop();
-        this.src = "images/" + encodeURIComponent(filename);
-    };
-    wordImage.src = wordData.img;
-
     feedbackMessage.classList.add('hidden');
     nextTurnBtn.classList.add('hidden');
     skipWordBtn.classList.remove('hidden');
 
-    // 3 Options (1 Correct + 2 Distractors)
-    const activeWordPool = activeWords.length >= 3 ? activeWords : getAllWords();
-    let distractors = activeWordPool
-        .filter(item => item.word !== currentQuestionWord)
-        .map(item => item.word);
-
-    let uniqueDistractors = Array.from(new Set(distractors));
-    if (uniqueDistractors.length < 2) {
-        const allGlobalWords = getAllWords()
-            .filter(item => item.word !== currentQuestionWord)
-            .map(item => item.word);
-        uniqueDistractors = Array.from(new Set([...uniqueDistractors, ...allGlobalWords]));
+    // Update unit badge above question
+    if (questionUnitBadge) {
+        const uNum = wordData.unitNumber || 1;
+        const uIcon = wordData.unitIcon || '🏷️';
+        questionUnitBadge.innerHTML = `<span class="unit-badge-emoji">${uIcon}</span> <span>${t('questionUnitTag', uNum)}</span>`;
+        questionUnitBadge.classList.remove('hidden');
     }
 
-    const shuffledDistractors = shuffleArray(uniqueDistractors).slice(0, 2);
-    const options = shuffleArray([currentQuestionWord, ...shuffledDistractors]);
+    const isScramble = wordData.isScramble || !wordData.img;
 
-    choicesContainer.innerHTML = '';
-    choicesContainer.classList.remove('hidden');
+    if (isScramble) {
+        // --- 🔤 HARF EŞLEŞTİRME / SCRAMBLE MODU ---
+        questionImageBox.classList.add('hidden');
+        choicesContainer.classList.add('hidden');
 
-    options.forEach((optionText, index) => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = `choice-btn choice-theme-${index % 3}`;
-        btn.dataset.word = optionText;
-        btn.innerHTML = `
-            <span class="choice-text">${optionText}</span>
-            <span class="choice-icon"></span>
-        `;
-        btn.addEventListener('click', () => handleChoiceSelect(optionText, currentQuestionWord, btn));
-        choicesContainer.appendChild(btn);
-    });
+        if (questionScrambleBox) {
+            questionScrambleBox.classList.remove('hidden');
+
+            const scrambleHeaderTitle = document.getElementById('scramble-header-title');
+            if (scrambleHeaderTitle) scrambleHeaderTitle.textContent = "Unscramble the Letters";
+
+            const scrambleModeBadge = document.getElementById('scramble-mode-badge');
+            if (scrambleModeBadge) scrambleModeBadge.textContent = "Letter Matching";
+
+            const meaningBanner = document.getElementById('scramble-meaning-banner');
+            const meaningText = document.getElementById('scramble-meaning-text');
+            if (meaningBanner && meaningText) {
+                const clueText = wordData.clue || wordData.en || wordData.hint || wordData.tr;
+                if (clueText) {
+                    meaningText.textContent = `${t('scrambleMeaningLabel')} "${clueText}"`;
+                    meaningBanner.classList.remove('hidden');
+                } else {
+                    meaningBanner.classList.add('hidden');
+                }
+            }
+
+            const lengthTag = document.getElementById('scramble-length-tag');
+            if (lengthTag) {
+                const wordsList = currentQuestionWord.trim().split(/\s+/);
+                const charCount = currentQuestionWord.replace(/[^a-zA-Z0-9]/g, '').length;
+                lengthTag.textContent = t('scrambleLength', charCount, wordsList.length);
+            }
+        }
+
+        setupScrambleQuestion(currentQuestionWord);
+    } else {
+        // --- 🖼️ GÖRSELLİ 3 ŞIKLI BAAMBOOZLE MODU ---
+        if (questionScrambleBox) questionScrambleBox.classList.add('hidden');
+        if (scrambleInteractiveArea) scrambleInteractiveArea.classList.add('hidden');
+
+        questionImageBox.classList.remove('hidden');
+        choicesContainer.classList.remove('hidden');
+
+        wordImage.onerror = function () {
+            console.warn("Image load error:", wordData.img);
+            const filename = wordData.img.split('/').pop();
+            this.src = "images/" + encodeURIComponent(filename);
+        };
+        wordImage.src = wordData.img;
+
+        // 3 Choices (1 Doğru + 2 Çeldirici)
+        const activeWordPool = activeWords.length >= 3 ? activeWords : getAllWords();
+        let distractors = activeWordPool
+            .filter(item => item.word !== currentQuestionWord)
+            .map(item => item.word);
+
+        let uniqueDistractors = Array.from(new Set(distractors));
+        if (uniqueDistractors.length < 2) {
+            const allGlobalWords = getAllWords()
+                .filter(item => item.word !== currentQuestionWord)
+                .map(item => item.word);
+            uniqueDistractors = Array.from(new Set([...uniqueDistractors, ...allGlobalWords]));
+        }
+
+        const shuffledDistractors = shuffleArray(uniqueDistractors).slice(0, 2);
+        const options = shuffleArray([currentQuestionWord, ...shuffledDistractors]);
+
+        choicesContainer.innerHTML = '';
+        options.forEach((optionText, index) => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = `choice-btn choice-theme-${index % 3}`;
+            btn.dataset.word = optionText;
+            btn.innerHTML = `
+                <span class="choice-text">${optionText}</span>
+                <span class="choice-icon"></span>
+            `;
+            btn.addEventListener('click', () => handleChoiceSelect(optionText, currentQuestionWord, btn));
+            choicesContainer.appendChild(btn);
+        });
+    }
 }
 
-// --- ŞIK SEÇİLDİĞİNDE YAPILACAKLAR ---
+// --- ŞIK SEÇİLDİĞİNDE YAPILACAKLAR (GÖRSELLİ SORULAR) ---
 function handleChoiceSelect(selectedWord, correctWord, clickedBtn) {
     if (isQuestionAnswered) return;
     isQuestionAnswered = true;
@@ -1285,36 +1554,388 @@ function handleChoiceSelect(selectedWord, correctWord, clickedBtn) {
     nextTurnBtn.classList.remove('hidden');
 }
 
+// ==========================================
+// HARF EŞLEŞTİRME (SCRAMBLE) MOTORU
+// ==========================================
+function setupScrambleQuestion(word) {
+    currentScrambleTarget = word.trim();
+    wordSegments = currentScrambleTarget.toUpperCase().split(/\s+/);
+    const cleanLetters = currentScrambleTarget.toUpperCase().replace(/[^A-Z0-9]/g, '').split('');
+    currentScrambleClean = cleanLetters.join('');
+
+    wrongAttempts = 0;
+    if (scrambleInteractiveArea) scrambleInteractiveArea.classList.remove('hidden');
+
+    // Harfleri pürüzsüz ve orijinal haliyle çakışmayacak şekilde karıştır
+    let scrambledLetters = shuffleArray([...cleanLetters]);
+    let guard = 0;
+    while (scrambledLetters.join('') === currentScrambleClean && scrambledLetters.length > 1 && guard < 10) {
+        scrambledLetters = shuffleArray([...cleanLetters]);
+        guard++;
+    }
+    if (scrambledLetters.join('') === currentScrambleClean && scrambledLetters.length > 1) {
+        const tmp = scrambledLetters[0];
+        scrambledLetters[0] = scrambledLetters[1];
+        scrambledLetters[1] = tmp;
+    }
+
+    scrambleLetterPool = scrambledLetters.map((char, index) => ({
+        id: `tile-${index}`,
+        letter: char,
+        used: false,
+        colorClass: `tile-color-${index % 6}`
+    }));
+
+    placedSlots = new Array(cleanLetters.length).fill(null);
+
+    const revealBtn = document.getElementById('scramble-reveal-btn');
+    if (revealBtn) revealBtn.classList.add('hidden');
+
+    renderScrambleSlots();
+    renderScrambleTiles();
+}
+
+function renderScrambleSlots() {
+    const wrapper = document.getElementById('scramble-slots-wrapper');
+    if (!wrapper) return;
+    wrapper.innerHTML = '';
+
+    const wordsContainer = document.createElement('div');
+    wordsContainer.className = 'scramble-words-container';
+
+    let globalSlotIndex = 0;
+    wordSegments.forEach((segment, wIdx) => {
+        const row = document.createElement('div');
+        row.className = 'scramble-word-row';
+
+        for (let cIdx = 0; cIdx < segment.length; cIdx++) {
+            const thisSlotIndex = globalSlotIndex;
+            const slot = document.createElement('button');
+            slot.type = 'button';
+            slot.className = 'scramble-slot';
+            slot.setAttribute('data-slot-index', thisSlotIndex);
+            if (slot.dataset) slot.dataset.slotIndex = thisSlotIndex;
+
+            const placed = placedSlots[thisSlotIndex];
+            if (placed) {
+                slot.textContent = placed.letter;
+                slot.classList.add('filled');
+                if (placed.status === 'correct') {
+                    slot.classList.add('correct');
+                } else if (placed.status === 'wrong') {
+                    slot.classList.add('wrong');
+                }
+            } else {
+                slot.textContent = '';
+            }
+
+            slot.addEventListener('click', () => {
+                if (isQuestionAnswered) return;
+                removeTileFromSlot(thisSlotIndex);
+            });
+
+            row.appendChild(slot);
+            globalSlotIndex++;
+        }
+
+        wordsContainer.appendChild(row);
+        if (wIdx < wordSegments.length - 1) {
+            const gap = document.createElement('div');
+            gap.className = 'scramble-word-gap';
+            wordsContainer.appendChild(gap);
+        }
+    });
+
+    wrapper.appendChild(wordsContainer);
+}
+
+function renderScrambleTiles() {
+    const pool = document.getElementById('scramble-tiles-pool');
+    if (!pool) return;
+    pool.innerHTML = '';
+
+    scrambleLetterPool.forEach(item => {
+        const tile = document.createElement('button');
+        tile.type = 'button';
+        tile.className = `scramble-tile ${item.colorClass} ${item.used ? 'used' : ''}`;
+        tile.id = item.id;
+        tile.textContent = item.letter;
+        tile.disabled = item.used || isQuestionAnswered;
+
+        tile.addEventListener('click', () => {
+            if (item.used || isQuestionAnswered) return;
+            placeTile(item);
+        });
+
+        pool.appendChild(tile);
+    });
+}
+
+function placeTile(item) {
+    const emptyIndex = placedSlots.findIndex(s => s === null);
+    if (emptyIndex === -1) return;
+
+    placedSlots[emptyIndex] = {
+        letter: item.letter,
+        tileId: item.id,
+        status: null
+    };
+    item.used = true;
+
+    renderScrambleSlots();
+    renderScrambleTiles();
+
+    // Tüm harfler yerleştirildiyse otomatik kontrol et
+    if (!placedSlots.includes(null)) {
+        checkScrambleAnswer();
+    }
+}
+
+function removeTileFromSlot(slotIndex) {
+    const placed = placedSlots[slotIndex];
+    if (!placed) return;
+
+    const tileItem = scrambleLetterPool.find(t => t.id === placed.tileId);
+    if (tileItem) {
+        tileItem.used = false;
+    }
+
+    placedSlots[slotIndex] = null;
+
+    renderScrambleSlots();
+    renderScrambleTiles();
+}
+
+function handleScrambleBackspace() {
+    if (isQuestionAnswered) return;
+    for (let i = placedSlots.length - 1; i >= 0; i--) {
+        if (placedSlots[i] !== null) {
+            removeTileFromSlot(i);
+            break;
+        }
+    }
+}
+
+function handleScrambleClear() {
+    if (isQuestionAnswered) return;
+    scrambleLetterPool.forEach(t => t.used = false);
+    placedSlots.fill(null);
+    renderScrambleSlots();
+    renderScrambleTiles();
+}
+
+function handleScrambleHint() {
+    if (isQuestionAnswered) return;
+    const cleanArr = currentScrambleClean.split('');
+    let targetIndex = -1;
+    for (let i = 0; i < cleanArr.length; i++) {
+        if (!placedSlots[i] || placedSlots[i].letter !== cleanArr[i]) {
+            targetIndex = i;
+            break;
+        }
+    }
+    if (targetIndex === -1) return;
+
+    if (placedSlots[targetIndex]) {
+        const oldTile = scrambleLetterPool.find(t => t.id === placedSlots[targetIndex].tileId);
+        if (oldTile) oldTile.used = false;
+        placedSlots[targetIndex] = null;
+    }
+
+    const neededChar = cleanArr[targetIndex];
+    let freeTile = scrambleLetterPool.find(t => !t.used && t.letter === neededChar);
+
+    if (!freeTile) {
+        const wrongSlotIdx = placedSlots.findIndex((s, idx) => s && s.letter === neededChar && idx !== targetIndex);
+        if (wrongSlotIdx !== -1) {
+            removeTileFromSlot(wrongSlotIdx);
+            freeTile = scrambleLetterPool.find(t => !t.used && t.letter === neededChar);
+        }
+    }
+
+    if (freeTile) {
+        placedSlots[targetIndex] = { letter: freeTile.letter, tileId: freeTile.id, status: 'correct' };
+        freeTile.used = true;
+    }
+
+    renderScrambleSlots();
+    renderScrambleTiles();
+
+    if (!placedSlots.includes(null)) {
+        checkScrambleAnswer();
+    }
+}
+
+function revealScrambleAnswer() {
+    if (isQuestionAnswered) return;
+    scrambleLetterPool.forEach(t => t.used = false);
+    const cleanArr = currentScrambleClean.split('');
+    cleanArr.forEach((char, idx) => {
+        const tile = scrambleLetterPool.find(t => !t.used && t.letter === char);
+        if (tile) {
+            tile.used = true;
+            placedSlots[idx] = { letter: char, tileId: tile.id, status: 'correct' };
+        }
+    });
+
+    renderScrambleSlots();
+    renderScrambleTiles();
+
+    isQuestionAnswered = true;
+    skipWordBtn.classList.add('hidden');
+
+    showFeedback(t('scrambleRevealed', currentQuestionWord), "info");
+
+    nextTurnBtn.textContent = t('nextTurnBtn');
+    nextTurnBtn.classList.remove('hidden');
+}
+
+function checkScrambleAnswer() {
+    if (isQuestionAnswered) return;
+
+    const hasAnyPlaced = placedSlots.some(s => s !== null);
+    if (!hasAnyPlaced) {
+        showFeedback("Please place some letters first!", "info");
+        return;
+    }
+
+    const cleanArr = currentScrambleClean.split('');
+    let allCorrect = true;
+    let anyWrong = false;
+
+    for (let i = 0; i < cleanArr.length; i++) {
+        if (placedSlots[i]) {
+            if (placedSlots[i].letter.toUpperCase() === cleanArr[i]) {
+                placedSlots[i].status = 'correct';
+            } else {
+                placedSlots[i].status = 'wrong';
+                allCorrect = false;
+                anyWrong = true;
+            }
+        } else {
+            allCorrect = false;
+        }
+    }
+
+    renderScrambleSlots();
+
+    if (allCorrect && !placedSlots.includes(null)) {
+        // DOĞRU! All letters are in the correct place!
+        isQuestionAnswered = true;
+        launchConfetti();
+        playAudioFeedback('correct');
+
+        groupScores[currentGroupIndex] += 10;
+        updateScoreBoard();
+
+        skipWordBtn.classList.add('hidden');
+        showFeedback(t('scrambleCorrect', currentQuestionWord), "success");
+
+        nextTurnBtn.textContent = t('nextTurnBtn');
+        nextTurnBtn.classList.remove('hidden');
+    } else {
+        // YANLIŞ / EKSİK!
+        wrongAttempts++;
+        playAudioFeedback('wrong');
+
+        if (anyWrong) {
+            showFeedback("❌ Green letters are in the right place! Red letters are wrong, click to replace them.", "danger");
+        } else {
+            showFeedback("Keep going! Fill all slots to complete the word.", "info");
+        }
+
+        if (wrongAttempts >= 2) {
+            const revealBtn = document.getElementById('scramble-reveal-btn');
+            if (revealBtn) revealBtn.classList.remove('hidden');
+        }
+    }
+}
+
+function initScrambleControls() {
+    if (scrambleBackspaceBtn) scrambleBackspaceBtn.addEventListener('click', handleScrambleBackspace);
+    if (scrambleClearBtn) scrambleClearBtn.addEventListener('click', handleScrambleClear);
+    if (scrambleHintBtn) scrambleHintBtn.addEventListener('click', handleScrambleHint);
+    if (scrambleCheckBtn) scrambleCheckBtn.addEventListener('click', checkScrambleAnswer);
+    if (scrambleRevealBtn) scrambleRevealBtn.addEventListener('click', revealScrambleAnswer);
+
+    // Klavye Desteği (Yazarak oynayabilme)
+    window.addEventListener('keydown', (e) => {
+        if (!gamePage || gamePage.classList.contains('hidden')) return;
+        if (!scrambleInteractiveArea || scrambleInteractiveArea.classList.contains('hidden')) return;
+        if (isQuestionAnswered || isSpinning) return;
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+        if (e.key === 'Backspace') {
+            e.preventDefault();
+            handleScrambleBackspace();
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            checkScrambleAnswer();
+        } else if (/^[a-zA-Z]$/.test(e.key)) {
+            const pressedChar = e.key.toUpperCase();
+            const availableTile = scrambleLetterPool.find(t => !t.used && t.letter === pressedChar);
+            if (availableTile) {
+                placeTile(availableTile);
+            }
+        }
+    });
+}
+
 function showFeedback(htmlText, type) {
     feedbackMessage.innerHTML = htmlText;
     feedbackMessage.className = `feedback-message ${type}`;
     feedbackMessage.classList.remove('hidden');
 }
 
-// --- SIRADAKİ TURA GEÇİŞ ---
+// --- SIRADAKİ TURA GEÇİŞ ("çıkan kişiyi çarktan sil" ve "herkes 1 kere oynayacak") ---
 function advanceToNextTurn() {
-    groupPlayerIndices[currentGroupIndex]++;
-
-    if (currentGroupIndex === 3) {
-        currentRound++;
+    // 1. Oynayan öğrenciyi işaretle
+    if (selectedPlayer) {
+        for (let g = 0; g < groups.length; g++) {
+            const p = groups[g].find(item => item.name === selectedPlayer);
+            if (p) {
+                p.played = true;
+                break;
+            }
+        }
+        // 2. Çıkan kişiyi çarktan sil!
+        allStudents = allStudents.filter(name => name !== selectedPlayer);
+        turnsPlayed++;
     }
-    currentGroupIndex = (currentGroupIndex + 1) % 4;
+
     selectedPlayer = null;
     isQuestionAnswered = false;
 
-    updateScoreBoard();
+    // Çarkı kalan öğrencilerle yeniden çiz ve listeyi güncelle
+    drawWheel();
+    updateRemainingBadge();
+    displayGroups();
 
-    if (currentRound >= MAX_ROUNDS) {
+    // 3. Herkes oynadıysa oyunu bitir!
+    if (allStudents.length === 0 || turnsPlayed >= totalStudentsCount) {
         endGame();
-    } else {
-        resetQuestionAreaForSpin();
+        return;
     }
+
+    // Henüz oynamamış öğrencisi olan sıradaki takıma geç
+    let attempts = 0;
+    do {
+        currentGroupIndex = (currentGroupIndex + 1) % 4;
+        attempts++;
+    } while (groups[currentGroupIndex].filter(p => !p.played).length === 0 && attempts < 8);
+
+    currentRound = Math.floor(turnsPlayed / 4);
+
+    updateScoreBoard();
+    resetQuestionAreaForSpin();
 }
 
 function resetQuestionAreaForSpin() {
     questionPlaceholder.classList.remove('hidden');
     questionImageBox.classList.add('hidden');
     choicesContainer.classList.add('hidden');
+    if (questionScrambleBox) questionScrambleBox.classList.add('hidden');
+    if (scrambleInteractiveArea) scrambleInteractiveArea.classList.add('hidden');
     feedbackMessage.classList.add('hidden');
     nextTurnBtn.classList.add('hidden');
     skipWordBtn.classList.add('hidden');
@@ -1370,12 +1991,15 @@ function endGame() {
     questionPlaceholder.innerHTML = `
         <div class="placeholder-icon">🏆</div>
         <div class="placeholder-text" style="font-size:1.5rem; color:var(--primary-color);">
-            ${t('gameOverTitle')}<br>${t('gameOverWinner', winners)}
+            ${t('gameOverTitle')}<br>${t('gameOverWinner', winners)}<br>
+            <span style="font-size: 1.05rem; color:#4A5568; display:block; margin-top:8px;">${t('allStudentsPlayedDesc')}</span>
         </div>
     `;
     questionPlaceholder.classList.remove('hidden');
     questionImageBox.classList.add('hidden');
     choicesContainer.classList.add('hidden');
+    if (questionScrambleBox) questionScrambleBox.classList.add('hidden');
+    if (scrambleInteractiveArea) scrambleInteractiveArea.classList.add('hidden');
     feedbackMessage.classList.add('hidden');
     nextTurnBtn.classList.add('hidden');
     skipWordBtn.classList.add('hidden');
@@ -1383,8 +2007,168 @@ function endGame() {
         questionUnitBadge.classList.add('hidden');
     }
 
+    drawWheel();
     launchConfetti();
     setTimeout(launchConfetti, 1000);
+}
+
+// ==========================================
+// ÖZEL KELİME MODALI (KELİME EKLE & YÖNET)
+// ==========================================
+function initCustomWordsModal() {
+    const modal = document.getElementById('custom-words-modal');
+    const openBtn = document.getElementById('open-custom-words-btn');
+    const sidebarAddBtn = document.getElementById('sidebar-add-word-btn');
+    const closeBtn = document.getElementById('close-custom-modal');
+    const closeDoneBtn = document.getElementById('close-modal-done-btn');
+    const backdrop = document.getElementById('modal-backdrop');
+
+    const form = document.getElementById('add-word-form');
+    const wordInput = document.getElementById('custom-word-input');
+    const meaningInput = document.getElementById('custom-meaning-input');
+
+    const toggleBulkBtn = document.getElementById('toggle-bulk-add');
+    const bulkContainer = document.getElementById('bulk-add-container');
+    const bulkInput = document.getElementById('bulk-words-input');
+    const saveBulkBtn = document.getElementById('save-bulk-words-btn');
+
+    const clearAllBtn = document.getElementById('clear-all-custom-btn');
+
+    function openModal() {
+        if (!modal) return;
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        renderCustomWordsList();
+        if (wordInput) wordInput.focus();
+    }
+
+    function closeModal() {
+        if (!modal) return;
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+        onUnitsSelectionChanged();
+    }
+
+    if (openBtn) openBtn.addEventListener('click', openModal);
+    if (sidebarAddBtn) sidebarAddBtn.addEventListener('click', openModal);
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (closeDoneBtn) closeDoneBtn.addEventListener('click', closeModal);
+    if (backdrop) backdrop.addEventListener('click', closeModal);
+
+    if (toggleBulkBtn && bulkContainer) {
+        toggleBulkBtn.addEventListener('click', () => {
+            bulkContainer.classList.toggle('hidden');
+        });
+    }
+
+    if (form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const w = wordInput.value.trim();
+            const tr = meaningInput ? meaningInput.value.trim() : '';
+            if (!w) return;
+
+            const existing = getCustomWords();
+            existing.push({ word: w, tr: tr });
+            saveCustomWords(existing);
+
+            wordInput.value = '';
+            if (meaningInput) meaningInput.value = '';
+
+            if (!selectedUnitIds.includes(5)) {
+                selectedUnitIds.push(5);
+            }
+
+            renderCustomWordsList();
+            renderUnitsUI();
+            rebuildActiveWords(true);
+        });
+    }
+
+    if (saveBulkBtn && bulkInput) {
+        saveBulkBtn.addEventListener('click', () => {
+            const raw = bulkInput.value.trim();
+            if (!raw) return;
+            const words = raw.split(/[\n,]+/).map(s => s.trim()).filter(Boolean);
+            if (words.length === 0) return;
+
+            const existing = getCustomWords();
+            words.forEach(w => {
+                existing.push({ word: w, tr: '' });
+            });
+            saveCustomWords(existing);
+            bulkInput.value = '';
+            bulkContainer.classList.add('hidden');
+
+            if (!selectedUnitIds.includes(5)) {
+                selectedUnitIds.push(5);
+            }
+
+            renderCustomWordsList();
+            renderUnitsUI();
+            rebuildActiveWords(true);
+        });
+    }
+
+    if (clearAllBtn) {
+        clearAllBtn.addEventListener('click', () => {
+            if (confirm("Are you sure you want to delete all custom words?")) {
+                saveCustomWords([]);
+                selectedUnitIds = selectedUnitIds.filter(id => id !== 5);
+                renderCustomWordsList();
+                renderUnitsUI();
+                rebuildActiveWords(true);
+            }
+        });
+    }
+
+    renderCustomWordsList();
+}
+
+function renderCustomWordsList() {
+    const listContainer = document.getElementById('custom-words-list');
+    const countEl = document.getElementById('custom-words-count');
+    const clearAllBtn = document.getElementById('clear-all-custom-btn');
+    if (!listContainer) return;
+
+    const words = getCustomWords();
+    if (countEl) countEl.textContent = `${words.length}`;
+    if (clearAllBtn) clearAllBtn.classList.toggle('hidden', words.length === 0);
+
+    if (words.length === 0) {
+        listContainer.innerHTML = `<div class="empty-custom-words" id="empty-custom-words">No custom words yet. Add some using the form above!</div>`;
+        return;
+    }
+
+    listContainer.innerHTML = '';
+    words.forEach((item, index) => {
+        const row = document.createElement('div');
+        row.className = 'custom-word-item';
+        row.innerHTML = `
+            <div class="custom-word-left">
+                <span class="custom-word-bullet">🔤</span>
+                <div>
+                    <span class="custom-word-name">${item.word}</span>
+                    ${(item.clue || item.tr) ? `<span class="custom-word-meaning"> (${item.clue || item.tr})</span>` : ''}
+                </div>
+            </div>
+            <button type="button" class="custom-word-delete-btn" title="Delete">🗑️</button>
+        `;
+
+        row.querySelector('.custom-word-delete-btn').addEventListener('click', () => {
+            const current = getCustomWords();
+            current.splice(index, 1);
+            saveCustomWords(current);
+            if (current.length === 0) {
+                selectedUnitIds = selectedUnitIds.filter(id => id !== 5);
+            }
+            renderCustomWordsList();
+            renderUnitsUI();
+            rebuildActiveWords(true);
+        });
+
+        listContainer.appendChild(row);
+    });
 }
 
 // --- GİRİŞ SAYFASI RENKLİ BAŞLIKLAR ---
